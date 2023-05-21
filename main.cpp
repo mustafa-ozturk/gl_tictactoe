@@ -45,10 +45,16 @@ struct Square {
     int y_end;
 };
 
+enum Player {
+    O, X
+};
+
+
 std::map<int, Square> create_squares();
 void draw_line(int x_start, int x_end, int y_start, int y_end);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 bool is_mouse1_pressed(GLFWwindow* window);
+Player next_player(Player current_player);
 unsigned int create_shader_program(const std::string& vertex_source, const std::string& fragment_source);
 
 int last_mouse_x = 0;
@@ -90,6 +96,8 @@ int main()
         {-1, -1, -1}
     };
 
+    Player current_player = Player::X;
+
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -105,21 +113,24 @@ int main()
                 {
                     if (input[0][0] < 0)
                     {
-                        input[0][0] = 1;
+                        input[0][0] = current_player;
+                        current_player = next_player(current_player);
                     }
                 }
                 if (last_mouse_y >= squares[3].y_start && last_mouse_y <= squares[3].y_end)
                 {
                     if (input[1][0] < 0)
                     {
-                        input[1][0] = 1;
+                        input[1][0] = current_player;
+                        current_player = next_player(current_player);
                     }
                 }
                 if (last_mouse_y >= squares[6].y_start && last_mouse_y <= squares[6].y_end)
                 {
                     if (input[2][0] < 0)
                     {
-                        input[2][0] = 1;
+                        input[2][0] = current_player;
+                        current_player = next_player(current_player);
                     }
                 }
             }
@@ -131,21 +142,24 @@ int main()
                 {
                     if (input[0][1] < 0)
                     {
-                        input[0][1] = 1;
+                        input[0][1] = current_player;
+                        current_player = next_player(current_player);
                     }
                 }
                 if (last_mouse_y >= squares[3].y_start && last_mouse_y <= squares[3].y_end)
                 {
                     if (input[1][1] < 0)
                     {
-                        input[1][1] = 1;
+                        input[1][1] = current_player;
+                        current_player = next_player(current_player);
                     }
                 }
                 if (last_mouse_y >= squares[6].y_start && last_mouse_y <= squares[6].y_end)
                 {
                     if (input[2][1] < 0)
                     {
-                        input[2][1] = 1;
+                        input[2][1] = current_player;
+                        current_player = next_player(current_player);
                     }
                 }
             }
@@ -157,21 +171,24 @@ int main()
                 {
                     if (input[0][2] < 0)
                     {
-                        input[0][2] = 1;
+                        input[0][2] = current_player;
+                        current_player = next_player(current_player);
                     }
                 }
                 if (last_mouse_y >= squares[3].y_start && last_mouse_y <= squares[3].y_end)
                 {
                     if (input[1][2] < 0)
                     {
-                        input[1][2] = 1;
+                        input[1][2] = current_player;
+                        current_player = next_player(current_player);
                     }
                 }
                 if (last_mouse_y >= squares[6].y_start && last_mouse_y <= squares[6].y_end)
                 {
                     if (input[2][2] < 0)
                     {
-                        input[2][2] = 1;
+                        input[2][2] = current_player;
+                        current_player = next_player(current_player);
                     }
                 }
             }
@@ -390,6 +407,18 @@ bool is_mouse1_pressed(GLFWwindow* window)
         return true;
     }
     return false;
+}
+
+Player next_player(Player current_player)
+{
+    if (current_player == Player::X)
+    {
+        return Player::O;
+    }
+    else
+    {
+        return Player::X;
+    }
 }
 
 unsigned int create_shader_program(const std::string& vertex_source, const std::string& fragment_source)
