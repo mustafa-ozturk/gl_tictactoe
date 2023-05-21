@@ -98,6 +98,7 @@ int main()
         gridlines.draw();
         if (is_mouse1_pressed(window))
         {
+            // first column inputs
             if (last_mouse_x >= squares[0].x_start && last_mouse_x <= squares[0].x_end)
             {
                 if (last_mouse_y >= squares[0].y_start && last_mouse_y <= squares[0].y_end)
@@ -123,6 +124,7 @@ int main()
                 }
             }
 
+            // second column inputs
             if (last_mouse_x >= squares[1].x_start && last_mouse_x <= squares[1].x_end)
             {
                 if (last_mouse_y >= squares[0].y_start && last_mouse_y <= squares[0].y_end)
@@ -148,6 +150,7 @@ int main()
                 }
             }
 
+            // third column inputs
             if (last_mouse_x >= squares[2].x_start && last_mouse_x <= squares[2].x_end)
             {
                 if (last_mouse_y >= squares[0].y_start && last_mouse_y <= squares[0].y_end)
