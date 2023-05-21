@@ -47,6 +47,7 @@ struct Square {
 
 std::map<int, Square> create_squares();
 void draw_line(int x_start, int x_end, int y_start, int y_end);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 unsigned int create_shader_program(const std::string& vertex_source, const std::string& fragment_source);
 
 int main()
@@ -63,6 +64,7 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSetCursorPosCallback(window, mouse_callback);
 
     glbinding::initialize(glfwGetProcAddress);
 
@@ -251,6 +253,11 @@ void draw_line(int x_start, int x_end, int y_start, int y_end)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    std::cout << xpos << ", " << SCREEN_HEIGHT - ypos << std::endl;
 }
 
 unsigned int create_shader_program(const std::string& vertex_source, const std::string& fragment_source)
