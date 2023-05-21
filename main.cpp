@@ -49,6 +49,10 @@ enum Player {
     O, X, DRAW
 };
 
+enum Game_state {
+    GAME, END
+};
+
 
 std::map<int, Square> create_squares();
 void draw_line(int x_start, int x_end, int y_start, int y_end);
@@ -83,7 +87,7 @@ int main()
     std::map<int, Square> squares = create_squares();
 
     gl_gridlines gridlines(SCREEN_WIDTH, SCREEN_HEIGHT, 10, {1.0f, 0.5f, 0.2f});
-    gl_textrenderer textrenderer(SCREEN_WIDTH, SCREEN_HEIGHT, "assets/UbuntuMono-R.ttf", 208, {1.0f, 1.0f, 1.0f, 1.1f});
+
 
     unsigned int shaderProgram = create_shader_program(vertex_shader_source, fragment_shader_source);
     glUseProgram(shaderProgram);
@@ -98,15 +102,22 @@ int main()
     };
 
     Player current_player = Player::X;
+    Game_state current_game_state = Game_state::GAME;
     int turn = 0;
+    float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+
+        // this is terrible to do just for changing color
+        // FIXME: add color param to draw call of gl_textrenderer
+        gl_textrenderer textrenderer(SCREEN_WIDTH, SCREEN_HEIGHT, "assets/UbuntuMono-R.ttf", 208, {text_color[0], text_color[1], text_color[2], text_color[3]});
+
         gridlines.draw();
-        if (is_mouse1_pressed(window))
+        if ( is_mouse1_pressed(window))
         {
             // first column inputs
             if (last_mouse_x >= squares[0].x_start && last_mouse_x <= squares[0].x_end)
@@ -197,7 +208,16 @@ int main()
         }
 
         glUseProgram(shaderProgram);
-        glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
+        if ( current_game_state == Game_state::END)
+        {
+            glUniform3f(glGetUniformLocation(shaderProgram, "color"), 0.3f, 0.3f, 0.3f);
+            text_color[0] = 0.3f; text_color[1] = 0.3f; text_color[2] = 0.3f; text_color[3] = 0.3f;
+        }
+        else
+        {
+            glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
+            text_color[0] = 1.0f; text_color[1] = 1.0f; text_color[2] = 1.0f; text_color[3] = 1.0f;
+        }
         // horizontal lines
         draw_line(0,
                   SCREEN_WIDTH,
@@ -220,6 +240,8 @@ int main()
                   0,
                   SCREEN_HEIGHT
         );
+
+
 
         // draw X's and O's
         /*
@@ -280,9 +302,11 @@ int main()
         if (turn == 9 && find_winner(input) == Player::DRAW)
         {
             std::cout << "DRAW" << std::endl;
+            current_game_state = Game_state::END;
         } else if (turn != 0 && find_winner(input) != Player::DRAW)
         {
             std::cout << "WINNER IS PLAYER: " << (find_winner(input) == 1 ? "X" : "O") << std::endl;
+            current_game_state = Game_state::END;
         }
 
         glfwSwapBuffers(window);
