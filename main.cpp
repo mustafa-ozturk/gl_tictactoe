@@ -119,19 +119,19 @@ int main()
 
         // draw X's and O's
         // 0
-        if (input[2][0] >= 0)
+        if (input[0][0] >= 0)
         {
-            textrenderer.render_text(input[2][0] == 1 ? "X" : "O", squares[0].x_start + 38, squares[0].y_start + 20);
+            textrenderer.render_text(input[0][0] == 1 ? "X" : "O", squares[0].x_start + 38, squares[0].y_start + 20);
         }
         // 1
-        if (input[2][1] >= 0)
+        if (input[0][1] >= 0)
         {
-            textrenderer.render_text(input[2][1] == 1 ? "X" : "O", squares[1].x_start + 38, squares[1].y_start + 20);
+            textrenderer.render_text(input[0][1] == 1 ? "X" : "O", squares[1].x_start + 38, squares[1].y_start + 20);
         }
         // 2
-        if (input[2][2] >= 0)
+        if (input[0][2] >= 0)
         {
-            textrenderer.render_text(input[2][2] == 1 ? "X" : "O", squares[2].x_start + 38, squares[2].y_start + 20);
+            textrenderer.render_text(input[0][2] == 1 ? "X" : "O", squares[2].x_start + 38, squares[2].y_start + 20);
         }
         // 3
         if (input[1][0] >= 0)
@@ -149,19 +149,19 @@ int main()
             textrenderer.render_text(input[1][2] == 1 ? "X" : "O", squares[5].x_start + 38, squares[5].y_start + 20);
         }
         // 6
-        if (input[0][0] >= 0)
+        if (input[2][0] >= 0)
         {
-            textrenderer.render_text(input[0][0] == 1 ? "X" : "O", squares[6].x_start + 38, squares[6].y_start + 20);
+            textrenderer.render_text(input[2][0] == 1 ? "X" : "O", squares[6].x_start + 38, squares[6].y_start + 20);
         }
         // 7
-        if (input[0][1] >= 0)
+        if (input[2][1] >= 0)
         {
-            textrenderer.render_text(input[0][1] == 1 ? "X" : "O", squares[7].x_start + 38, squares[7].y_start + 20);
+            textrenderer.render_text(input[2][1] == 1 ? "X" : "O", squares[7].x_start + 38, squares[7].y_start + 20);
         }
         // 8
-        if (input[0][2] >= 0)
+        if (input[2][2] >= 0)
         {
-            textrenderer.render_text(input[0][2] == 1 ? "X" : "O", squares[8].x_start + 38, squares[8].y_start + 20);
+            textrenderer.render_text(input[2][2] == 1 ? "X" : "O", squares[8].x_start + 38, squares[8].y_start + 20);
         }
 
         glfwSwapBuffers(window);
@@ -180,27 +180,35 @@ std::map<int, Square> create_squares()
      * --|---|--
      * 0 | 1 | 2
      * */
+
+    /*
+     * 0 | 1 | 2
+     * --|---|--
+     * 3 | 4 | 5
+     * --|---|--
+     * 6 | 7 | 8
+     * */
     std::map<int, Square> squares = {};
 
-    Square zero{};
+    Square zero{}; // 0
     zero.x_start = 0;
     zero.x_end = SCREEN_WIDTH / 3;
-    zero.y_start = 0;
-    zero.y_end = SCREEN_HEIGHT / 3;
+    zero.y_start = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
+    zero.y_end = SCREEN_HEIGHT;
     squares.insert({0, zero});
 
-    Square one{};
+    Square one{}; // 1
     one.x_start = SCREEN_WIDTH / 3;
     one.x_end = SCREEN_WIDTH - SCREEN_WIDTH / 3;
-    one.y_start = 0;
-    one.y_end = SCREEN_HEIGHT / 3;
+    one.y_start = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
+    one.y_end = SCREEN_HEIGHT;
     squares.insert({1, one});
 
-    Square two{};
+    Square two{}; // 2
     two.x_start = SCREEN_WIDTH - SCREEN_WIDTH / 3;
     two.x_end = SCREEN_WIDTH;
-    two.y_start = 0;
-    two.y_end = SCREEN_HEIGHT / 3;
+    two.y_start = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
+    two.y_end = SCREEN_HEIGHT;
     squares.insert({2, two});
 
     Square three{};
@@ -224,25 +232,25 @@ std::map<int, Square> create_squares()
     five.y_end = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
     squares.insert({5, five});
 
-    Square six{};
+    Square six{}; // 6
     six.x_start = 0;
     six.x_end = SCREEN_WIDTH / 3;
-    six.y_start = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
-    six.y_end = SCREEN_HEIGHT;
+    six.y_start = 0;
+    six.y_end = SCREEN_HEIGHT / 3;
     squares.insert({6, six});
 
-    Square seven{};
+    Square seven{}; // 7
     seven.x_start = SCREEN_WIDTH / 3;
     seven.x_end = SCREEN_WIDTH - SCREEN_WIDTH / 3;
-    seven.y_start = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
-    seven.y_end = SCREEN_HEIGHT;
+    seven.y_start = 0;
+    seven.y_end = SCREEN_HEIGHT / 3;
     squares.insert({7, seven});
 
-    Square eight{};
+    Square eight{}; // 8
     eight.x_start = SCREEN_WIDTH - SCREEN_WIDTH / 3;
     eight.x_end = SCREEN_WIDTH;
-    eight.y_start = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
-    eight.y_end = SCREEN_HEIGHT;
+    eight.y_start = 0;
+    eight.y_end = SCREEN_HEIGHT / 3;
     squares.insert({8, eight});
 
     return squares;
