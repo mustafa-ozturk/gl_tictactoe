@@ -14,6 +14,13 @@ using namespace gl;
 const unsigned int SCREEN_WIDTH = 500;
 const unsigned int SCREEN_HEIGHT = 500;
 
+struct Square {
+    int x_begin;
+    int x_end;
+    int y_begin;
+    int y_end;
+};
+
 int main()
 {
     if (!glfwInit()) return -1;
