@@ -51,7 +51,6 @@ int main()
         glfwPollEvents();
     }
 
-    std::cout << "Hello, World!" << std::endl;
     return 0;
 }
 
