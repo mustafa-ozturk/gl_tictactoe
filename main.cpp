@@ -80,11 +80,10 @@ int main()
     glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
 
     int input[3][3] = {
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
+        {1, 0, 0},
+        {0, 1, 0},
+        {0, 0, 1}
     };
-
 
     while (!glfwWindowShouldClose(window))
     {
@@ -120,25 +119,50 @@ int main()
 
         // draw X's and O's
         // 0
-        textrenderer.render_text("X", squares[0].x_start + 38, squares[0].y_start + 20);
+        if (input[2][0] >= 0)
+        {
+            textrenderer.render_text(input[2][0] == 1 ? "X" : "O", squares[0].x_start + 38, squares[0].y_start + 20);
+        }
         // 1
-        textrenderer.render_text("X", squares[1].x_start + 38, squares[1].y_start + 20);
+        if (input[2][1] >= 0)
+        {
+            textrenderer.render_text(input[2][1] == 1 ? "X" : "O", squares[1].x_start + 38, squares[1].y_start + 20);
+        }
         // 2
-        textrenderer.render_text("X", squares[2].x_start + 38, squares[2].y_start + 20);
-
+        if (input[2][2] >= 0)
+        {
+            textrenderer.render_text(input[2][2] == 1 ? "X" : "O", squares[2].x_start + 38, squares[2].y_start + 20);
+        }
         // 3
-        textrenderer.render_text("X", squares[3].x_start + 38, squares[3].y_start + 20);
+        if (input[1][0] >= 0)
+        {
+            textrenderer.render_text(input[1][0] == 1 ? "X" : "O", squares[3].x_start + 38, squares[3].y_start + 20);
+        }
         // 4
-        textrenderer.render_text("X", squares[4].x_start + 38, squares[4].y_start + 20);
+        if (input[1][1] >= 0)
+        {
+            textrenderer.render_text(input[1][1] == 1 ? "X" : "O", squares[4].x_start + 38, squares[4].y_start + 20);
+        }
         // 5
-        textrenderer.render_text("X", squares[5].x_start + 38, squares[5].y_start + 20);
-
+        if (input[1][2] >= 0)
+        {
+            textrenderer.render_text(input[1][2] == 1 ? "X" : "O", squares[5].x_start + 38, squares[5].y_start + 20);
+        }
         // 6
-        textrenderer.render_text("X", squares[6].x_start + 38, squares[6].y_start + 20);
+        if (input[0][0] >= 0)
+        {
+            textrenderer.render_text(input[0][0] == 1 ? "X" : "O", squares[6].x_start + 38, squares[6].y_start + 20);
+        }
         // 7
-        textrenderer.render_text("X", squares[7].x_start + 38, squares[7].y_start + 20);
+        if (input[0][1] >= 0)
+        {
+            textrenderer.render_text(input[0][1] == 1 ? "X" : "O", squares[7].x_start + 38, squares[7].y_start + 20);
+        }
         // 8
-        textrenderer.render_text("X", squares[8].x_start + 38, squares[8].y_start + 20);
+        if (input[0][2] >= 0)
+        {
+            textrenderer.render_text(input[0][2] == 1 ? "X" : "O", squares[8].x_start + 38, squares[8].y_start + 20);
+        }
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -263,7 +287,7 @@ void draw_line(int x_start, int x_end, int y_start, int y_end)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    std::cout << xpos << ", " << SCREEN_HEIGHT - ypos << std::endl;
+//    std::cout << xpos << ", " << SCREEN_HEIGHT - ypos << std::endl;
 }
 
 unsigned int create_shader_program(const std::string& vertex_source, const std::string& fragment_source)
