@@ -108,7 +108,7 @@ int main()
     int turn = 0;
     float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
-    gl_textrenderer end_text_renderer(SCREEN_WIDTH, SCREEN_HEIGHT, "assets/UbuntuMono-R.ttf", 20, {1.0f, 1.0f, 1.0f, 1.0f});
+    gl_textrenderer end_text_renderer(SCREEN_WIDTH, SCREEN_HEIGHT, "assets/UbuntuMono-R.ttf", 20, {0.0f, 1.0f, 0.8f, 1.0f});
     std::string end_text = "click anywhere to replay";
     auto end_text_size = end_text_renderer.get_text_size(end_text);
     std::string draw_text = "DRAW!";
@@ -128,7 +128,7 @@ int main()
         // FIXME: add color param to draw call of gl_textrenderer
         gl_textrenderer textrenderer(SCREEN_WIDTH, SCREEN_HEIGHT, "assets/UbuntuMono-R.ttf", 208, {text_color[0], text_color[1], text_color[2], text_color[3]});
 
-        gridlines.draw();
+//        gridlines.draw();
 
         int curr_mouse_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1);
         if (curr_mouse_state == GLFW_PRESS && prev_mouse_state == GLFW_RELEASE)
@@ -243,8 +243,8 @@ int main()
         glUseProgram(shaderProgram);
         if ( current_game_state == Game_state::END)
         {
-            glUniform3f(glGetUniformLocation(shaderProgram, "color"), 0.3f, 0.3f, 0.3f);
-            text_color[0] = 0.3f; text_color[1] = 0.3f; text_color[2] = 0.3f; text_color[3] = 0.3f;
+            glUniform3f(glGetUniformLocation(shaderProgram, "color"), 0.2f, 0.2f, 0.2f);
+            text_color[0] = 0.2f; text_color[1] = 0.2f; text_color[2] = 0.2f; text_color[3] = 0.2f;
         }
         else
         {
