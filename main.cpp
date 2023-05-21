@@ -80,9 +80,9 @@ int main()
     glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
 
     int input[3][3] = {
-        {1, 0, 0},
-        {0, 1, 0},
-        {0, 0, 1}
+        {-1, -1, -1},
+        {-1, -1, -1},
+        {-1, -1, -1}
     };
 
     while (!glfwWindowShouldClose(window))
