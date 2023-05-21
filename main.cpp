@@ -106,6 +106,8 @@ int main()
     int turn = 0;
     float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
+    float end_time = 0.0f;
+
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -119,6 +121,22 @@ int main()
         gridlines.draw();
         if ( is_mouse1_pressed(window))
         {
+            if (current_game_state == Game_state::END && glfwGetTime() - end_time > 0.4)
+            {
+                // reset game
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        input[i][j] = -1;
+                    }
+                }
+                turn = 0;
+                current_player = Player::X;
+                current_game_state = Game_state::GAME;
+            }
+
+
             // first column inputs
             if (last_mouse_x >= squares[0].x_start && last_mouse_x <= squares[0].x_end)
             {
@@ -302,10 +320,14 @@ int main()
         if (turn == 9 && find_winner(input) == Player::DRAW)
         {
             std::cout << "DRAW" << std::endl;
+            if (current_game_state != Game_state::END)
+                end_time = glfwGetTime();
             current_game_state = Game_state::END;
         } else if (turn != 0 && find_winner(input) != Player::DRAW)
         {
             std::cout << "WINNER IS PLAYER: " << (find_winner(input) == 1 ? "X" : "O") << std::endl;
+            if (current_game_state != Game_state::END)
+                end_time = glfwGetTime();
             current_game_state = Game_state::END;
         }
 
