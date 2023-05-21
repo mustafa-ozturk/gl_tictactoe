@@ -54,7 +54,8 @@ std::map<int, Square> create_squares();
 void draw_line(int x_start, int x_end, int y_start, int y_end);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 bool is_mouse1_pressed(GLFWwindow* window);
-Player next_player(Player current_player);
+Player next_player(Player current_player, int& turn);
+Player find_winner(int input[3][3]);
 unsigned int create_shader_program(const std::string& vertex_source, const std::string& fragment_source);
 
 int last_mouse_x = 0;
@@ -97,6 +98,7 @@ int main()
     };
 
     Player current_player = Player::X;
+    int turn = 0;
 
     while (!glfwWindowShouldClose(window))
     {
@@ -114,7 +116,7 @@ int main()
                     if (input[0][0] < 0)
                     {
                         input[0][0] = current_player;
-                        current_player = next_player(current_player);
+                        current_player = next_player(current_player, turn);
                     }
                 }
                 if (last_mouse_y >= squares[3].y_start && last_mouse_y <= squares[3].y_end)
@@ -122,7 +124,7 @@ int main()
                     if (input[1][0] < 0)
                     {
                         input[1][0] = current_player;
-                        current_player = next_player(current_player);
+                        current_player = next_player(current_player, turn);
                     }
                 }
                 if (last_mouse_y >= squares[6].y_start && last_mouse_y <= squares[6].y_end)
@@ -130,7 +132,7 @@ int main()
                     if (input[2][0] < 0)
                     {
                         input[2][0] = current_player;
-                        current_player = next_player(current_player);
+                        current_player = next_player(current_player, turn);
                     }
                 }
             }
@@ -143,7 +145,7 @@ int main()
                     if (input[0][1] < 0)
                     {
                         input[0][1] = current_player;
-                        current_player = next_player(current_player);
+                        current_player = next_player(current_player, turn);
                     }
                 }
                 if (last_mouse_y >= squares[3].y_start && last_mouse_y <= squares[3].y_end)
@@ -151,7 +153,7 @@ int main()
                     if (input[1][1] < 0)
                     {
                         input[1][1] = current_player;
-                        current_player = next_player(current_player);
+                        current_player = next_player(current_player, turn);
                     }
                 }
                 if (last_mouse_y >= squares[6].y_start && last_mouse_y <= squares[6].y_end)
@@ -159,7 +161,7 @@ int main()
                     if (input[2][1] < 0)
                     {
                         input[2][1] = current_player;
-                        current_player = next_player(current_player);
+                        current_player = next_player(current_player, turn);
                     }
                 }
             }
@@ -172,7 +174,7 @@ int main()
                     if (input[0][2] < 0)
                     {
                         input[0][2] = current_player;
-                        current_player = next_player(current_player);
+                        current_player = next_player(current_player, turn);
                     }
                 }
                 if (last_mouse_y >= squares[3].y_start && last_mouse_y <= squares[3].y_end)
@@ -180,7 +182,7 @@ int main()
                     if (input[1][2] < 0)
                     {
                         input[1][2] = current_player;
-                        current_player = next_player(current_player);
+                        current_player = next_player(current_player, turn);
                     }
                 }
                 if (last_mouse_y >= squares[6].y_start && last_mouse_y <= squares[6].y_end)
@@ -188,7 +190,7 @@ int main()
                     if (input[2][2] < 0)
                     {
                         input[2][2] = current_player;
-                        current_player = next_player(current_player);
+                        current_player = next_player(current_player, turn);
                     }
                 }
             }
@@ -271,6 +273,13 @@ int main()
         if (input[2][2] >= 0)
         {
             textrenderer.render_text(input[2][2] == 1 ? "X" : "O", squares[8].x_start + 38, squares[8].y_start + 20);
+        }
+
+        std::cout << turn << std::endl;
+
+        if (turn == 9)
+        {
+            std::cout << "winner is: " << std::endl;
         }
 
         glfwSwapBuffers(window);
@@ -409,8 +418,9 @@ bool is_mouse1_pressed(GLFWwindow* window)
     return false;
 }
 
-Player next_player(Player current_player)
+Player next_player(Player current_player, int& turn)
 {
+    turn++;
     if (current_player == Player::X)
     {
         return Player::O;
