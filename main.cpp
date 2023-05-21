@@ -108,9 +108,15 @@ int main()
     int turn = 0;
     float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
-    float end_time = 0.0f;
-
-    gl_textrenderer end_text(SCREEN_WIDTH, SCREEN_HEIGHT, "assets/UbuntuMono-R.ttf", 20, {1.0f, 1.0f, 1.0f, 1.0f});
+    gl_textrenderer end_text_renderer(SCREEN_WIDTH, SCREEN_HEIGHT, "assets/UbuntuMono-R.ttf", 20, {1.0f, 1.0f, 1.0f, 1.0f});
+    std::string end_text = "click anywhere to replay";
+    auto end_text_size = end_text_renderer.get_text_size(end_text);
+    std::string draw_text = "DRAW!";
+    auto draw_text_size = end_text_renderer.get_text_size(draw_text);
+    std::string x_win_text = "X WINS!";
+    auto x_win_text_size = end_text_renderer.get_text_size(x_win_text);
+    std::string o_win_text = "O WINS!";
+    auto o_win_text_size = end_text_renderer.get_text_size(o_win_text);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -128,7 +134,7 @@ int main()
         if (curr_mouse_state == GLFW_PRESS && prev_mouse_state == GLFW_RELEASE)
         {
             std::cout << "test" << std::endl;
-            if (current_game_state == Game_state::END && glfwGetTime() - end_time > 0.4)
+            if (current_game_state == Game_state::END)
             {
                 // reset game
                 for (int i = 0; i < 3; i++)
@@ -325,19 +331,24 @@ int main()
 
         if (turn == 9 && find_winner(input) == Player::DRAW)
         {
-            std::cout << "DRAW" << std::endl;
-            if (current_game_state != Game_state::END)
-                end_time = glfwGetTime();
             current_game_state = Game_state::END;
-            end_text.render_text("Click anywhere to restart", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+            end_text_renderer.render_text(draw_text,
+                                          SCREEN_WIDTH / 2 - draw_text_size.first / 2,
+                                          SCREEN_HEIGHT / 2 - draw_text_size.second / 2 + 20
+            );
+            end_text_renderer.render_text(end_text,
+                                          SCREEN_WIDTH / 2 - end_text_size.first / 2,
+                                          SCREEN_HEIGHT / 2 - end_text_size.second / 2 + 2
+            );
         }
         else if (turn != 0 && find_winner(input) != Player::DRAW)
         {
-            std::cout << "WINNER IS PLAYER: " << (find_winner(input) == 1 ? "X" : "O") << std::endl;
-            if (current_game_state != Game_state::END)
-                end_time = glfwGetTime();
             current_game_state = Game_state::END;
-            end_text.render_text("Click anywhere to restart", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+            end_text_renderer.render_text((find_winner(input) == 1 ? x_win_text : o_win_text),
+                                          SCREEN_WIDTH / 2 - ((find_winner(input) == 1 ? x_win_text_size.first : x_win_text_size.first)) / 2,
+                                          SCREEN_HEIGHT / 2 - ((find_winner(input) == 1 ? x_win_text_size.second : x_win_text_size.second)) / 2 + 20
+            );
+            end_text_renderer.render_text(end_text, SCREEN_WIDTH / 2 - end_text_size.first / 2, SCREEN_HEIGHT / 2 - end_text_size.second / 2 + 2);
         }
 
         glfwSwapBuffers(window);
