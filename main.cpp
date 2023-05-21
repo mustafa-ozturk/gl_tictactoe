@@ -11,8 +11,8 @@
 
 using namespace gl;
 
-const unsigned int SCREEN_WIDTH = 500;
-const unsigned int SCREEN_HEIGHT = 500;
+const unsigned int SCREEN_WIDTH = 510;
+const unsigned int SCREEN_HEIGHT = 510;
 
 struct Square {
     int x_begin;
@@ -42,10 +42,14 @@ int main()
 
     std::map<int, Square> squares = create_squares();
 
+    gl_gridlines gridlines(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH / 3, {1.0f, 0.5f, 0.2f});
+
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        gridlines.draw();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
