@@ -48,6 +48,7 @@ struct Square {
 std::map<int, Square> create_squares();
 void draw_line(int x_start, int x_end, int y_start, int y_end);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+bool is_mouse1_pressed(GLFWwindow* window);
 unsigned int create_shader_program(const std::string& vertex_source, const std::string& fragment_source);
 
 int main()
@@ -91,6 +92,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         gridlines.draw();
+        std::cout << is_mouse1_pressed(window) << std::endl;
 
         glUseProgram(shaderProgram);
         glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
@@ -295,6 +297,15 @@ void draw_line(int x_start, int x_end, int y_start, int y_end)
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 //    std::cout << xpos << ", " << SCREEN_HEIGHT - ypos << std::endl;
+}
+
+bool is_mouse1_pressed(GLFWwindow* window)
+{
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+    {
+        return true;
+    }
+    return false;
 }
 
 unsigned int create_shader_program(const std::string& vertex_source, const std::string& fragment_source)
