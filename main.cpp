@@ -76,6 +76,8 @@ int main()
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
 
+    std::cout << squares.size() << std::endl;
+
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -188,6 +190,8 @@ std::map<int, Square> create_squares()
     eight.y_start = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
     eight.y_start = SCREEN_HEIGHT;
     squares.insert({8, eight});
+
+    return squares;
 }
 
 void draw_line(int x_start, int x_end, int y_start, int y_end)
