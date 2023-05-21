@@ -85,7 +85,28 @@ int main()
 
         glUseProgram(shaderProgram);
         glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
-        draw_line(0, SCREEN_WIDTH, SCREEN_HEIGHT/ 2, SCREEN_HEIGHT /2);
+        // horizontal lines
+        draw_line(0,
+                  SCREEN_WIDTH,
+                  SCREEN_HEIGHT / 3,
+                  SCREEN_HEIGHT / 3
+        );
+        draw_line(0,
+                  SCREEN_WIDTH,
+                  SCREEN_HEIGHT - SCREEN_HEIGHT / 3,
+                  SCREEN_HEIGHT - SCREEN_HEIGHT / 3
+        );
+        // vertical lines
+        draw_line(SCREEN_WIDTH / 3,
+                  SCREEN_WIDTH / 3,
+                  0,
+                  SCREEN_HEIGHT
+        );
+        draw_line(SCREEN_WIDTH - SCREEN_WIDTH / 3,
+                  SCREEN_WIDTH - SCREEN_WIDTH / 3,
+                  0,
+                  SCREEN_HEIGHT
+        );
 
         glfwSwapBuffers(window);
         glfwPollEvents();
