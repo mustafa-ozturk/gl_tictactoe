@@ -46,7 +46,7 @@ struct Square {
 };
 
 enum Player {
-    O, X
+    O, X, DRAW
 };
 
 
@@ -277,9 +277,12 @@ int main()
 
         std::cout << turn << std::endl;
 
-        if (turn == 9)
+        if (turn == 9 && find_winner(input) == Player::DRAW)
         {
-            std::cout << "winner is: " << std::endl;
+            std::cout << "DRAW" << std::endl;
+        } else if (turn != 0 && find_winner(input) != Player::DRAW)
+        {
+            std::cout << "WINNER IS PLAYER: " << (find_winner(input) == 1 ? "X" : "O") << std::endl;
         }
 
         glfwSwapBuffers(window);
@@ -429,6 +432,49 @@ Player next_player(Player current_player, int& turn)
     {
         return Player::X;
     }
+}
+Player find_winner(int input[3][3])
+{
+    for (int player = 0; player < 2; player++)
+    {
+        // horizontal checks
+        if (input[0][0] == player && input[0][1] == player && input[0][2] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        if (input[1][0] == player && input[1][1] == player && input[1][2] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        if (input[2][0] == player && input[2][1] == player && input[2][2] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        // vertical checks
+        if (input[0][0] == player && input[1][0] == player && input[2][0] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        if (input[0][1] == player && input[1][1] == player && input[2][1] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        if (input[0][2] == player && input[1][2] == player && input[2][2] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        // cross checks
+        if (input[0][0] == player && input[1][1] == player && input[2][2] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        if (input[0][2] == player && input[1][1] == player && input[2][0] == player)
+        {
+            return static_cast<Player>(player);
+        }
+    }
+
+    return Player::DRAW;
 }
 
 unsigned int create_shader_program(const std::string& vertex_source, const std::string& fragment_source)
