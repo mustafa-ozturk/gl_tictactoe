@@ -68,7 +68,8 @@ int main()
 
     std::map<int, Square> squares = create_squares();
 
-    gl_gridlines gridlines(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH / 3, {1.0f, 0.5f, 0.2f});
+    gl_gridlines gridlines(SCREEN_WIDTH, SCREEN_HEIGHT, 10, {1.0f, 0.5f, 0.2f});
+    gl_textrenderer textrenderer(SCREEN_WIDTH, SCREEN_HEIGHT, "assets/UbuntuMono-R.ttf", 208, {1.0f, 1.0f, 1.0f, 1.1f});
 
     unsigned int shaderProgram = create_shader_program(vertex_shader_source, fragment_shader_source);
     glUseProgram(shaderProgram);
@@ -76,7 +77,6 @@ int main()
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
 
-    std::cout << squares.size() << std::endl;
 
     while (!glfwWindowShouldClose(window))
     {
@@ -109,6 +109,28 @@ int main()
                   0,
                   SCREEN_HEIGHT
         );
+
+        // draw X's and O's
+        // 0
+        textrenderer.render_text("X", squares[0].x_start + 38, squares[0].y_start + 20);
+        // 1
+        textrenderer.render_text("X", squares[1].x_start + 38, squares[1].y_start + 20);
+        // 2
+        textrenderer.render_text("X", squares[2].x_start + 38, squares[2].y_start + 20);
+
+        // 3
+        textrenderer.render_text("X", squares[3].x_start + 38, squares[3].y_start + 20);
+        // 4
+        textrenderer.render_text("X", squares[4].x_start + 38, squares[4].y_start + 20);
+        // 5
+        textrenderer.render_text("X", squares[5].x_start + 38, squares[5].y_start + 20);
+
+        // 6
+        textrenderer.render_text("X", squares[6].x_start + 38, squares[6].y_start + 20);
+        // 7
+        textrenderer.render_text("X", squares[7].x_start + 38, squares[7].y_start + 20);
+        // 8
+        textrenderer.render_text("X", squares[8].x_start + 38, squares[8].y_start + 20);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
