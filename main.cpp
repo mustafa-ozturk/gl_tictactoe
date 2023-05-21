@@ -51,6 +51,10 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 bool is_mouse1_pressed(GLFWwindow* window);
 unsigned int create_shader_program(const std::string& vertex_source, const std::string& fragment_source);
 
+int last_mouse_x = 0;
+int last_mouse_y = 0;
+
+
 int main()
 {
     if (!glfwInit()) return -1;
@@ -92,7 +96,83 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         gridlines.draw();
-        std::cout << is_mouse1_pressed(window) << std::endl;
+        if (is_mouse1_pressed(window))
+        {
+            if (last_mouse_x >= squares[0].x_start && last_mouse_x <= squares[0].x_end)
+            {
+                if (last_mouse_y >= squares[0].y_start && last_mouse_y <= squares[0].y_end)
+                {
+                    if (input[0][0] < 0)
+                    {
+                        input[0][0] = 1;
+                    }
+                }
+                if (last_mouse_y >= squares[3].y_start && last_mouse_y <= squares[3].y_end)
+                {
+                    if (input[1][0] < 0)
+                    {
+                        input[1][0] = 1;
+                    }
+                }
+                if (last_mouse_y >= squares[6].y_start && last_mouse_y <= squares[6].y_end)
+                {
+                    if (input[2][0] < 0)
+                    {
+                        input[2][0] = 1;
+                    }
+                }
+            }
+
+            if (last_mouse_x >= squares[1].x_start && last_mouse_x <= squares[1].x_end)
+            {
+                if (last_mouse_y >= squares[0].y_start && last_mouse_y <= squares[0].y_end)
+                {
+                    if (input[0][1] < 0)
+                    {
+                        input[0][1] = 1;
+                    }
+                }
+                if (last_mouse_y >= squares[3].y_start && last_mouse_y <= squares[3].y_end)
+                {
+                    if (input[1][1] < 0)
+                    {
+                        input[1][1] = 1;
+                    }
+                }
+                if (last_mouse_y >= squares[6].y_start && last_mouse_y <= squares[6].y_end)
+                {
+                    if (input[2][1] < 0)
+                    {
+                        input[2][1] = 1;
+                    }
+                }
+            }
+
+            if (last_mouse_x >= squares[2].x_start && last_mouse_x <= squares[2].x_end)
+            {
+                if (last_mouse_y >= squares[0].y_start && last_mouse_y <= squares[0].y_end)
+                {
+                    if (input[0][2] < 0)
+                    {
+                        input[0][2] = 1;
+                    }
+                }
+                if (last_mouse_y >= squares[3].y_start && last_mouse_y <= squares[3].y_end)
+                {
+                    if (input[1][2] < 0)
+                    {
+                        input[1][2] = 1;
+                    }
+                }
+                if (last_mouse_y >= squares[6].y_start && last_mouse_y <= squares[6].y_end)
+                {
+                    if (input[2][2] < 0)
+                    {
+                        input[2][2] = 1;
+                    }
+                }
+            }
+        }
 
         glUseProgram(shaderProgram);
         glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
@@ -296,7 +376,8 @@ void draw_line(int x_start, int x_end, int y_start, int y_end)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-//    std::cout << xpos << ", " << SCREEN_HEIGHT - ypos << std::endl;
+    last_mouse_x = (int)xpos;
+    last_mouse_y = (int)SCREEN_HEIGHT - (int)ypos;
 }
 
 bool is_mouse1_pressed(GLFWwindow* window)
