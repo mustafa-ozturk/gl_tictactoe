@@ -14,6 +14,30 @@ using namespace gl;
 const unsigned int SCREEN_WIDTH = 510;
 const unsigned int SCREEN_HEIGHT = 510;
 
+const std::string vertex_shader_source = R"(
+        #version 330 core
+        layout (location = 0) in vec2 aPos;
+
+        uniform mat4 projection;
+
+        void main()
+        {
+            gl_Position = projection * vec4(aPos.xy, 1, 1);
+        }
+)";
+
+const std::string fragment_shader_source = R"(
+        #version 330 core
+        out vec4 FragColor;
+
+        uniform vec3 color;
+
+        void main()
+        {
+            FragColor = vec4(color.xyz, 1.0f);
+        }
+)";
+
 struct Square {
     int x_start;
     int x_end;
