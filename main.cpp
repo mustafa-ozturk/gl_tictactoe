@@ -83,6 +83,10 @@ int main()
 
         gridlines.draw();
 
+        glUseProgram(shaderProgram);
+        glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
+        draw_line(0, SCREEN_WIDTH, SCREEN_HEIGHT/ 2, SCREEN_HEIGHT /2);
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -171,11 +175,11 @@ void draw_line(int x_start, int x_end, int y_start, int y_end)
      * A --- B
      * */
     std::array<int, 8> vertices{
-            x_start, y_start,   // A
-            y_start, y_end,     // B
+            x_start,    y_start,   // A
+            x_end,      y_end,     // B
     };
 
-    std::array<GLuint, 2> indices{
+    std::array<unsigned int, 2> indices{
             0, 1,
     };
 
@@ -189,11 +193,11 @@ void draw_line(int x_start, int x_end, int y_start, int y_end)
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(int), vertices.data(), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, 2 * sizeof(GLuint), (const void*) 0);
+    glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, 2 * sizeof(int), (const void*)0);
     glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 
     glDrawElements(GL_LINES, indices.size(), GL_UNSIGNED_INT, nullptr);
 
