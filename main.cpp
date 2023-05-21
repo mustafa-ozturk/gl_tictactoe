@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unistd.h>
 #include <GLFW/glfw3.h>
 #include <glbinding/glbinding.h>
 #include <glbinding/gl/gl.h>
@@ -65,6 +66,7 @@ unsigned int create_shader_program(const std::string& vertex_source, const std::
 int last_mouse_x = 0;
 int last_mouse_y = 0;
 
+int prev_mouse_state = GLFW_RELEASE;
 
 int main()
 {
@@ -108,6 +110,8 @@ int main()
 
     float end_time = 0.0f;
 
+    gl_textrenderer end_text(SCREEN_WIDTH, SCREEN_HEIGHT, "assets/UbuntuMono-R.ttf", 20, {1.0f, 1.0f, 1.0f, 1.0f});
+
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -119,8 +123,11 @@ int main()
         gl_textrenderer textrenderer(SCREEN_WIDTH, SCREEN_HEIGHT, "assets/UbuntuMono-R.ttf", 208, {text_color[0], text_color[1], text_color[2], text_color[3]});
 
         gridlines.draw();
-        if ( is_mouse1_pressed(window))
+
+        int curr_mouse_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1);
+        if (curr_mouse_state == GLFW_PRESS && prev_mouse_state == GLFW_RELEASE)
         {
+            std::cout << "test" << std::endl;
             if (current_game_state == Game_state::END && glfwGetTime() - end_time > 0.4)
             {
                 // reset game
@@ -134,8 +141,9 @@ int main()
                 turn = 0;
                 current_player = Player::X;
                 current_game_state = Game_state::GAME;
+                prev_mouse_state = curr_mouse_state;
+                continue;
             }
-
 
             // first column inputs
             if (last_mouse_x >= squares[0].x_start && last_mouse_x <= squares[0].x_end)
@@ -224,6 +232,7 @@ int main()
                 }
             }
         }
+        prev_mouse_state = curr_mouse_state;
 
         glUseProgram(shaderProgram);
         if ( current_game_state == Game_state::END)
@@ -258,7 +267,6 @@ int main()
                   0,
                   SCREEN_HEIGHT
         );
-
 
 
         // draw X's and O's
@@ -315,20 +323,21 @@ int main()
             textrenderer.render_text(input[2][2] == 1 ? "X" : "O", squares[8].x_start + 38, squares[8].y_start + 20);
         }
 
-        std::cout << turn << std::endl;
-
         if (turn == 9 && find_winner(input) == Player::DRAW)
         {
             std::cout << "DRAW" << std::endl;
             if (current_game_state != Game_state::END)
                 end_time = glfwGetTime();
             current_game_state = Game_state::END;
-        } else if (turn != 0 && find_winner(input) != Player::DRAW)
+            end_text.render_text("Click anywhere to restart", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        }
+        else if (turn != 0 && find_winner(input) != Player::DRAW)
         {
             std::cout << "WINNER IS PLAYER: " << (find_winner(input) == 1 ? "X" : "O") << std::endl;
             if (current_game_state != Game_state::END)
                 end_time = glfwGetTime();
             current_game_state = Game_state::END;
+            end_text.render_text("Click anywhere to restart", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
         }
 
         glfwSwapBuffers(window);
