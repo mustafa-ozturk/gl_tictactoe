@@ -11,7 +11,7 @@ add_executable(${PROJECT_NAME}
         main.cpp
         include/gl_gridlines/gl_gridlines.cpp
         include/gl_textrenderer/gl_textrenderer.cpp
-        include/Square/Square.cpp include/Square/Square.h include/Game/Game.cpp include/Game/Game.h)
+        include/Square/Square.cpp include/Square/Square.h include/Game/Game.cpp include/Game/Game.h include/Shader/Shader.cpp include/Shader/Shader.h)
 
 find_package ( glfw3 REQUIRED )
 target_link_libraries(${PROJECT_NAME} PUBLIC glfw )
