@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <glbinding/gl/gl.h>
+#include "gl_textrenderer/gl_textrenderer.h"
+#include "Square/Square.h"
 
 using namespace gl;
 
@@ -16,7 +18,9 @@ public:
             {-1, -1, -1},
             {-1, -1, -1}
     };
-    std::string map_player(int input_value);
+    void draw_input(gl_textrenderer& textrenderer,
+                    std::map<int, Square>& squares);
 private:
     void draw_line(int x_start, int x_end, int y_start, int y_end);
+    std::string map_player(int input_value);
 };

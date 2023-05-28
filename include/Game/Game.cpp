@@ -76,3 +76,80 @@ std::string Game::map_player(int input_value)
         return "X";
     }
 }
+
+void Game::draw_input(gl_textrenderer& textrenderer,
+                      std::map<int, Square>& squares)
+{
+    // draw X's and O's
+    /*
+     * 0 | 1 | 2
+     * --|---|--
+     * 3 | 4 | 5
+     * --|---|--
+     * 6 | 7 | 8
+     * */
+    // 0
+    if (input[0][0] >= 0)
+    {
+        // TODO: make a function to replace the X or O check
+        textrenderer.render_text(map_player(input[0][0]),
+                                 squares[0].x_start + 38,
+                                 squares[0].y_start + 20);
+    }
+    // 1
+    if (input[0][1] >= 0)
+    {
+        textrenderer.render_text(map_player(input[0][1]),
+                                 squares[1].x_start + 38,
+                                 squares[1].y_start + 20);
+    }
+    // 2
+    if (input[0][2] >= 0)
+    {
+        textrenderer.render_text(map_player(input[0][2]),
+                                 squares[2].x_start + 38,
+                                 squares[2].y_start + 20);
+    }
+    // 3
+    if (input[1][0] >= 0)
+    {
+        textrenderer.render_text(map_player(input[1][0]),
+                                 squares[3].x_start + 38,
+                                 squares[3].y_start + 20);
+    }
+    // 4
+    if (input[1][1] >= 0)
+    {
+        textrenderer.render_text(map_player(input[1][1]),
+                                 squares[4].x_start + 38,
+                                 squares[4].y_start + 20);
+    }
+    // 5
+    if (input[1][2] >= 0)
+    {
+        textrenderer.render_text(map_player(input[1][2]),
+                                 squares[5].x_start + 38,
+                                 squares[5].y_start + 20);
+    }
+    // 6
+    if (input[2][0] >= 0)
+    {
+        textrenderer.render_text(map_player(input[2][0]),
+                                 squares[6].x_start + 38,
+                                 squares[6].y_start + 20);
+    }
+    // 7
+    if (input[2][1] >= 0)
+    {
+        textrenderer.render_text(map_player(input[2][1]),
+                                 squares[7].x_start + 38,
+                                 squares[7].y_start + 20);
+    }
+    // 8
+    if (input[2][2] >= 0)
+    {
+        textrenderer.render_text(map_player(input[2][2]),
+                                 squares[8].x_start + 38,
+                                 squares[8].y_start + 20);
+    }
+}
