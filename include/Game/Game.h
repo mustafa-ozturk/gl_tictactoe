@@ -16,6 +16,7 @@ public:
             {-1, -1, -1},
             {-1, -1, -1}
     };
+    std::string map_player(int input_value);
 private:
     void draw_line(int x_start, int x_end, int y_start, int y_end);
 };

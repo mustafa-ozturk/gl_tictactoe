@@ -64,3 +64,15 @@ void Game::draw_line(int x_start, int x_end, int y_start, int y_end)
     glBindVertexArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
+
+std::string Game::map_player(int input_value)
+{
+    if (input_value == 0)
+    {
+        return "O";
+    }
+    if (input_value == 1)
+    {
+        return "X";
+    }
+}
