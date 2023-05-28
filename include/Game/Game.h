@@ -16,16 +16,28 @@ class Game
 {
 public:
     Game() = default;
+
     ~Game() = default;
+
     void draw_lines(int screen_width, int screen_height);
+
     int input[3][3] = {
             {-1, -1, -1},
             {-1, -1, -1},
             {-1, -1, -1}
     };
+
     void draw_input(gl_textrenderer& textrenderer,
                     std::map<int, Square>& squares);
+
+    void process_input(int last_mouse_x, int last_mouse_y,
+                       std::map<int, Square>& squares, Player& current_player,
+                       int& turn);
+
 private:
     void draw_line(int x_start, int x_end, int y_start, int y_end);
+
     std::string map_player(int input_value);
+
+    Player next_player(Player current_player, int& turn);
 };

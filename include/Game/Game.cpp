@@ -152,3 +152,128 @@ void Game::draw_input(gl_textrenderer& textrenderer,
                                  squares[8].y_start + 20);
     }
 }
+
+void Game::process_input(int last_mouse_x, int last_mouse_y,
+                         std::map<int, Square>& squares, Player& current_player,
+                         int& turn)
+{
+// first column inputs
+    if (last_mouse_x >= squares[0].x_start &&
+        last_mouse_x <= squares[0].x_end)
+    {
+        if (last_mouse_y >= squares[0].y_start &&
+            last_mouse_y <= squares[0].y_end)
+        {
+            if (input[0][0] < 0)
+            {
+                input[0][0] = current_player;
+                current_player = next_player(current_player,
+                                             turn);
+            }
+        }
+        if (last_mouse_y >= squares[3].y_start &&
+            last_mouse_y <= squares[3].y_end)
+        {
+            if (input[1][0] < 0)
+            {
+                input[1][0] = current_player;
+                current_player = next_player(current_player,
+                                             turn);
+            }
+        }
+        if (last_mouse_y >= squares[6].y_start &&
+            last_mouse_y <= squares[6].y_end)
+        {
+            if (input[2][0] < 0)
+            {
+                input[2][0] = current_player;
+                current_player = next_player(current_player,
+                                             turn);
+            }
+        }
+    }
+
+    // second column inputs
+    if (last_mouse_x >= squares[1].x_start &&
+        last_mouse_x <= squares[1].x_end)
+    {
+        if (last_mouse_y >= squares[0].y_start &&
+            last_mouse_y <= squares[0].y_end)
+        {
+            if (input[0][1] < 0)
+            {
+                input[0][1] = current_player;
+                current_player = next_player(current_player,
+                                             turn);
+            }
+        }
+        if (last_mouse_y >= squares[3].y_start &&
+            last_mouse_y <= squares[3].y_end)
+        {
+            if (input[1][1] < 0)
+            {
+                input[1][1] = current_player;
+                current_player = next_player(current_player,
+                                             turn);
+            }
+        }
+        if (last_mouse_y >= squares[6].y_start &&
+            last_mouse_y <= squares[6].y_end)
+        {
+            if (input[2][1] < 0)
+            {
+                input[2][1] = current_player;
+                current_player = next_player(current_player,
+                                             turn);
+            }
+        }
+    }
+
+    // third column inputs
+    if (last_mouse_x >= squares[2].x_start &&
+        last_mouse_x <= squares[2].x_end)
+    {
+        if (last_mouse_y >= squares[0].y_start &&
+            last_mouse_y <= squares[0].y_end)
+        {
+            if (input[0][2] < 0)
+            {
+                input[0][2] = current_player;
+                current_player = next_player(current_player,
+                                             turn);
+            }
+        }
+        if (last_mouse_y >= squares[3].y_start &&
+            last_mouse_y <= squares[3].y_end)
+        {
+            if (input[1][2] < 0)
+            {
+                input[1][2] = current_player;
+                current_player = next_player(current_player,
+                                             turn);
+            }
+        }
+        if (last_mouse_y >= squares[6].y_start &&
+            last_mouse_y <= squares[6].y_end)
+        {
+            if (input[2][2] < 0)
+            {
+                input[2][2] = current_player;
+                current_player = next_player(current_player,
+                                             turn);
+            }
+        }
+    }
+}
+
+Player Game::next_player(Player current_player, int& turn)
+{
+    turn++;
+    if (current_player == Player::X)
+    {
+        return Player::O;
+    } else
+    {
+        return Player::X;
+    }
+}

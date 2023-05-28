@@ -28,8 +28,6 @@ std::map<int, Square> create_squares();
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
-Player next_player(Player current_player, int& turn);
-
 Player find_winner(int input[3][3]);
 
 int last_mouse_x = 0;
@@ -109,113 +107,8 @@ int main()
                 if (curr_mouse_state == GLFW_PRESS &&
                     prev_mouse_state == GLFW_RELEASE)
                 {
-                    // first column inputs
-                    if (last_mouse_x >= squares[0].x_start &&
-                        last_mouse_x <= squares[0].x_end)
-                    {
-                        if (last_mouse_y >= squares[0].y_start &&
-                            last_mouse_y <= squares[0].y_end)
-                        {
-                            if (game.input[0][0] < 0)
-                            {
-                                game.input[0][0] = current_player;
-                                current_player = next_player(current_player,
-                                                             turn);
-                            }
-                        }
-                        if (last_mouse_y >= squares[3].y_start &&
-                            last_mouse_y <= squares[3].y_end)
-                        {
-                            if (game.input[1][0] < 0)
-                            {
-                                game.input[1][0] = current_player;
-                                current_player = next_player(current_player,
-                                                             turn);
-                            }
-                        }
-                        if (last_mouse_y >= squares[6].y_start &&
-                            last_mouse_y <= squares[6].y_end)
-                        {
-                            if (game.input[2][0] < 0)
-                            {
-                                game.input[2][0] = current_player;
-                                current_player = next_player(current_player,
-                                                             turn);
-                            }
-                        }
-                    }
-
-                    // second column inputs
-                    if (last_mouse_x >= squares[1].x_start &&
-                        last_mouse_x <= squares[1].x_end)
-                    {
-                        if (last_mouse_y >= squares[0].y_start &&
-                            last_mouse_y <= squares[0].y_end)
-                        {
-                            if (game.input[0][1] < 0)
-                            {
-                                game.input[0][1] = current_player;
-                                current_player = next_player(current_player,
-                                                             turn);
-                            }
-                        }
-                        if (last_mouse_y >= squares[3].y_start &&
-                            last_mouse_y <= squares[3].y_end)
-                        {
-                            if (game.input[1][1] < 0)
-                            {
-                                game.input[1][1] = current_player;
-                                current_player = next_player(current_player,
-                                                             turn);
-                            }
-                        }
-                        if (last_mouse_y >= squares[6].y_start &&
-                            last_mouse_y <= squares[6].y_end)
-                        {
-                            if (game.input[2][1] < 0)
-                            {
-                                game.input[2][1] = current_player;
-                                current_player = next_player(current_player,
-                                                             turn);
-                            }
-                        }
-                    }
-
-                    // third column inputs
-                    if (last_mouse_x >= squares[2].x_start &&
-                        last_mouse_x <= squares[2].x_end)
-                    {
-                        if (last_mouse_y >= squares[0].y_start &&
-                            last_mouse_y <= squares[0].y_end)
-                        {
-                            if (game.input[0][2] < 0)
-                            {
-                                game.input[0][2] = current_player;
-                                current_player = next_player(current_player,
-                                                             turn);
-                            }
-                        }
-                        if (last_mouse_y >= squares[3].y_start &&
-                            last_mouse_y <= squares[3].y_end)
-                        {
-                            if (game.input[1][2] < 0)
-                            {
-                                game.input[1][2] = current_player;
-                                current_player = next_player(current_player,
-                                                             turn);
-                            }
-                        }
-                        if (last_mouse_y >= squares[6].y_start &&
-                            last_mouse_y <= squares[6].y_end)
-                        {
-                            if (game.input[2][2] < 0)
-                            {
-                                game.input[2][2] = current_player;
-                                current_player = next_player(current_player,
-                                                             turn);
-                            }
-                        }
-                    }
+                    game.process_input(last_mouse_x, last_mouse_y, squares,
+                                       current_player, turn);
                 }
                 glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f,
                             1.0f, 1.0f);
@@ -385,18 +278,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
     last_mouse_x = (int) xpos;
     last_mouse_y = (int) SCREEN_HEIGHT - (int) ypos;
-}
-
-Player next_player(Player current_player, int& turn)
-{
-    turn++;
-    if (current_player == Player::X)
-    {
-        return Player::O;
-    } else
-    {
-        return Player::X;
-    }
 }
 
 Player find_winner(int input[3][3])
