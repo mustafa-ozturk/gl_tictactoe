@@ -57,8 +57,6 @@ void draw_line(int x_start, int x_end, int y_start, int y_end);
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
-bool is_mouse1_pressed(GLFWwindow* window);
-
 Player next_player(Player current_player, int& turn);
 
 Player find_winner(int input[3][3]);
@@ -549,15 +547,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
     last_mouse_x = (int) xpos;
     last_mouse_y = (int) SCREEN_HEIGHT - (int) ypos;
-}
-
-bool is_mouse1_pressed(GLFWwindow* window)
-{
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
-    {
-        return true;
-    }
-    return false;
 }
 
 Player next_player(Player current_player, int& turn)
