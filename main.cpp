@@ -270,6 +270,7 @@ int main()
         // 0
         if (game.input[0][0] >= 0)
         {
+            // TODO: make a function to replace the X or O check
             textrenderer.render_text(game.input[0][0] == 1 ? "X" : "O",
                                      squares[0].x_start + 38,
                                      squares[0].y_start + 20);
