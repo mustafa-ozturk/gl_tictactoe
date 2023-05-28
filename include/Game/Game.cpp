@@ -91,7 +91,6 @@ void Game::draw_input(gl_textrenderer& textrenderer,
     // 0
     if (input[0][0] >= 0)
     {
-        // TODO: make a function to replace the X or O check
         textrenderer.render_text(map_player(input[0][0]),
                                  squares[0].x_start + 38,
                                  squares[0].y_start + 20);
