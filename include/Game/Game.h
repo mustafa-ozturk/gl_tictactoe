@@ -12,6 +12,11 @@ enum Player
     O, X, DRAW
 };
 
+enum GAME_STATE
+{
+    GAME, END
+};
+
 class Game
 {
 public:
@@ -34,6 +39,9 @@ public:
                        std::map<int, Square>& squares, Player& current_player,
                        int& turn);
 
+    void reset(int& turn, Player& current_player,
+               GAME_STATE& current_game_state, int& prev_mouse_state,
+               int& curr_mouse_state);
 private:
     void draw_line(int x_start, int x_end, int y_start, int y_end);
 

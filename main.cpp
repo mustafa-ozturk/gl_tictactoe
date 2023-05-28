@@ -18,10 +18,6 @@ using namespace gl;
 const unsigned int SCREEN_WIDTH = 510;
 const unsigned int SCREEN_HEIGHT = 510;
 
-enum GAME_STATE
-{
-    GAME, END
-};
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
@@ -120,18 +116,8 @@ int main()
                 if (curr_mouse_state == GLFW_PRESS &&
                     prev_mouse_state == GLFW_RELEASE)
                 {
-                    // reset game
-                    for (int i = 0; i < 3; i++)
-                    {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            game.input[i][j] = -1;
-                        }
-                    }
-                    turn = 0;
-                    current_player = Player::X;
-                    current_game_state = GAME_STATE::GAME;
-                    prev_mouse_state = curr_mouse_state;
+                    game.reset(turn, current_player, current_game_state,
+                               prev_mouse_state, curr_mouse_state);
                     break;
                 }
 

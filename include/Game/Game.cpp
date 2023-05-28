@@ -277,3 +277,21 @@ Player Game::next_player(Player current_player, int& turn)
         return Player::X;
     }
 }
+
+void Game::reset(int& turn, Player& current_player,
+                 GAME_STATE& current_game_state, int& prev_mouse_state,
+                 int& curr_mouse_state)
+{
+    // reset game
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            input[i][j] = -1;
+        }
+    }
+    turn = 0;
+    current_player = Player::X;
+    current_game_state = GAME_STATE::GAME;
+    prev_mouse_state = curr_mouse_state;
+}
