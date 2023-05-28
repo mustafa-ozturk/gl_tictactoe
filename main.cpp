@@ -9,6 +9,7 @@
 
 #include "gl_textrenderer/gl_textrenderer.h"
 #include "gl_gridlines/gl_gridlines.h"
+#include "Square/Square.h"
 
 using namespace gl;
 
@@ -38,14 +39,6 @@ const std::string fragment_shader_source = R"(
             FragColor = vec4(color.xyz, 1.0f);
         }
 )";
-
-struct Square
-{
-    int x_start;
-    int x_end;
-    int y_start;
-    int y_end;
-};
 
 enum Player
 {
