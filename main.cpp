@@ -260,38 +260,46 @@ int main()
         game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT);
         game.draw_input(textrenderer, squares);
 
-        if (turn == 9 && find_winner(game.input) == Player::DRAW)
+
+        const Player end_state = find_winner(game.input);
+        if (turn == 9 || end_state != Player::DRAW)
         {
-            current_game_state = GAME_STATE::END;
-            end_text_renderer.render_text(draw_text,
-                                          SCREEN_WIDTH / 2 -
-                                          draw_text_size.first / 2,
-                                          SCREEN_HEIGHT / 2 -
-                                          draw_text_size.second / 2 + 20
-            );
-            end_text_renderer.render_text(end_text,
-                                          SCREEN_WIDTH / 2 -
-                                          end_text_size.first / 2,
-                                          SCREEN_HEIGHT / 2 -
-                                          end_text_size.second / 2 + 2
-            );
-        } else if (turn != 0 && find_winner(game.input) != Player::DRAW)
-        {
-            current_game_state = GAME_STATE::END;
-            end_text_renderer.render_text(
-                    (find_winner(game.input) == 1 ? x_win_text : o_win_text),
-                    SCREEN_WIDTH / 2 -
-                    ((find_winner(game.input) == 1 ? x_win_text_size.first
-                                              : x_win_text_size.first)) / 2,
-                    SCREEN_HEIGHT / 2 -
-                    ((find_winner(game.input) == 1 ? x_win_text_size.second
-                                              : x_win_text_size.second)) / 2 +
-                    20
-            );
-            end_text_renderer.render_text(end_text, SCREEN_WIDTH / 2 -
-                                                    end_text_size.first / 2,
-                                          SCREEN_HEIGHT / 2 -
-                                          end_text_size.second / 2 + 2);
+            if (end_state != Player::DRAW)
+            {
+                current_game_state = GAME_STATE::END;
+                end_text_renderer.render_text(
+                        (find_winner(game.input) == 1 ? x_win_text
+                                                      : o_win_text),
+                        SCREEN_WIDTH / 2 -
+                        ((find_winner(game.input) == 1 ? x_win_text_size.first
+                                                       : x_win_text_size.first)) /
+                        2,
+                        SCREEN_HEIGHT / 2 -
+                        ((find_winner(game.input) == 1 ? x_win_text_size.second
+                                                       : x_win_text_size.second)) /
+                        2 +
+                        20
+                );
+                end_text_renderer.render_text(end_text, SCREEN_WIDTH / 2 -
+                                                        end_text_size.first / 2,
+                                              SCREEN_HEIGHT / 2 -
+                                              end_text_size.second / 2 + 2);
+            } else
+            {
+                current_game_state = GAME_STATE::END;
+                end_text_renderer.render_text(draw_text,
+                                              SCREEN_WIDTH / 2 -
+                                              draw_text_size.first / 2,
+                                              SCREEN_HEIGHT / 2 -
+                                              draw_text_size.second / 2 + 20
+                );
+                end_text_renderer.render_text(end_text,
+                                              SCREEN_WIDTH / 2 -
+                                              end_text_size.first / 2,
+                                              SCREEN_HEIGHT / 2 -
+                                              end_text_size.second / 2 + 2
+                );
+            }
         }
 
         glfwSwapBuffers(window);
