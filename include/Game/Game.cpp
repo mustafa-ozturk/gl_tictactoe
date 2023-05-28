@@ -295,3 +295,54 @@ void Game::reset(int& turn, Player& current_player,
     current_game_state = GAME_STATE::GAME;
     prev_mouse_state = curr_mouse_state;
 }
+
+Player Game::find_winner()
+{
+    for (int player = 0; player < 2; player++)
+    {
+        // horizontal checks
+        if (input[0][0] == player && input[0][1] == player &&
+            input[0][2] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        if (input[1][0] == player && input[1][1] == player &&
+            input[1][2] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        if (input[2][0] == player && input[2][1] == player &&
+            input[2][2] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        // vertical checks
+        if (input[0][0] == player && input[1][0] == player &&
+            input[2][0] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        if (input[0][1] == player && input[1][1] == player &&
+            input[2][1] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        if (input[0][2] == player && input[1][2] == player &&
+            input[2][2] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        // cross checks
+        if (input[0][0] == player && input[1][1] == player &&
+            input[2][2] == player)
+        {
+            return static_cast<Player>(player);
+        }
+        if (input[0][2] == player && input[1][1] == player &&
+            input[2][0] == player)
+        {
+            return static_cast<Player>(player);
+        }
+    }
+    return Player::DRAW;
+}

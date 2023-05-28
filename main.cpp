@@ -18,10 +18,7 @@ using namespace gl;
 const unsigned int SCREEN_WIDTH = 510;
 const unsigned int SCREEN_HEIGHT = 510;
 
-
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-
-Player find_winner(int input[3][3]);
 
 int last_mouse_x = 0;
 int last_mouse_y = 0;
@@ -134,22 +131,22 @@ int main()
         game.draw_input(textrenderer, squares);
 
 
-        const Player end_state = find_winner(game.input);
+        const Player end_state = game.find_winner();
         if (turn == 9 || end_state != Player::DRAW)
         {
             if (end_state != Player::DRAW)
             {
                 current_game_state = GAME_STATE::END;
                 end_text_renderer.render_text(
-                        (find_winner(game.input) == 1 ? x_win_text
-                                                      : o_win_text),
+                        (end_state == 1 ? x_win_text
+                                        : o_win_text),
                         SCREEN_WIDTH / 2 -
-                        ((find_winner(game.input) == 1 ? x_win_text_size.first
-                                                       : o_win_text_size.first)) /
+                        ((end_state == 1 ? x_win_text_size.first
+                                         : o_win_text_size.first)) /
                         2,
                         SCREEN_HEIGHT / 2 -
-                        ((find_winner(game.input) == 1 ? x_win_text_size.second
-                                                       : o_win_text_size.second)) /
+                        ((end_state == 1 ? x_win_text_size.second
+                                         : o_win_text_size.second)) /
                         2 +
                         20
                 );
@@ -186,56 +183,4 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
     last_mouse_x = (int) xpos;
     last_mouse_y = (int) SCREEN_HEIGHT - (int) ypos;
-}
-
-Player find_winner(int input[3][3])
-{
-    for (int player = 0; player < 2; player++)
-    {
-        // horizontal checks
-        if (input[0][0] == player && input[0][1] == player &&
-            input[0][2] == player)
-        {
-            return static_cast<Player>(player);
-        }
-        if (input[1][0] == player && input[1][1] == player &&
-            input[1][2] == player)
-        {
-            return static_cast<Player>(player);
-        }
-        if (input[2][0] == player && input[2][1] == player &&
-            input[2][2] == player)
-        {
-            return static_cast<Player>(player);
-        }
-        // vertical checks
-        if (input[0][0] == player && input[1][0] == player &&
-            input[2][0] == player)
-        {
-            return static_cast<Player>(player);
-        }
-        if (input[0][1] == player && input[1][1] == player &&
-            input[2][1] == player)
-        {
-            return static_cast<Player>(player);
-        }
-        if (input[0][2] == player && input[1][2] == player &&
-            input[2][2] == player)
-        {
-            return static_cast<Player>(player);
-        }
-        // cross checks
-        if (input[0][0] == player && input[1][1] == player &&
-            input[2][2] == player)
-        {
-            return static_cast<Player>(player);
-        }
-        if (input[0][2] == player && input[1][1] == player &&
-            input[2][0] == player)
-        {
-            return static_cast<Player>(player);
-        }
-    }
-
-    return Player::DRAW;
 }

@@ -42,6 +42,8 @@ public:
     void reset(int& turn, Player& current_player,
                GAME_STATE& current_game_state, int& prev_mouse_state,
                int& curr_mouse_state);
+
+    Player find_winner();
 private:
     void draw_line(int x_start, int x_end, int y_start, int y_end);
 
