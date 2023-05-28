@@ -52,7 +52,7 @@ enum Player
     O, X, DRAW
 };
 
-enum Game_state
+enum GAME_STATE
 {
     GAME, END
 };
@@ -118,7 +118,7 @@ int main()
     };
 
     Player current_player = Player::X;
-    Game_state current_game_state = Game_state::GAME;
+    GAME_STATE current_game_state = GAME_STATE::GAME;
     int turn = 0;
     float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
@@ -134,11 +134,11 @@ int main()
     std::string o_win_text = "O WINS!";
     auto o_win_text_size = end_text_renderer.get_text_size(o_win_text);
 
+
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
 
         // this is terrible to do just for changing color
         // FIXME: add color param to draw call of gl_textrenderer
@@ -147,148 +147,158 @@ int main()
                                      {text_color[0], text_color[1],
                                       text_color[2], text_color[3]});
 
-//        gridlines.draw();
-
+        glUseProgram(shaderProgram);
         int curr_mouse_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1);
-        if (curr_mouse_state == GLFW_PRESS && prev_mouse_state == GLFW_RELEASE)
+        switch (current_game_state)
         {
-            std::cout << "test" << std::endl;
-            if (current_game_state == Game_state::END)
-            {
-                // reset game
-                for (int i = 0; i < 3; i++)
+            case GAME_STATE::GAME:
+                if (curr_mouse_state == GLFW_PRESS &&
+                    prev_mouse_state == GLFW_RELEASE)
                 {
-                    for (int j = 0; j < 3; j++)
+                    // first column inputs
+                    if (last_mouse_x >= squares[0].x_start &&
+                        last_mouse_x <= squares[0].x_end)
                     {
-                        input[i][j] = -1;
+                        if (last_mouse_y >= squares[0].y_start &&
+                            last_mouse_y <= squares[0].y_end)
+                        {
+                            if (input[0][0] < 0)
+                            {
+                                input[0][0] = current_player;
+                                current_player = next_player(current_player,
+                                                             turn);
+                            }
+                        }
+                        if (last_mouse_y >= squares[3].y_start &&
+                            last_mouse_y <= squares[3].y_end)
+                        {
+                            if (input[1][0] < 0)
+                            {
+                                input[1][0] = current_player;
+                                current_player = next_player(current_player,
+                                                             turn);
+                            }
+                        }
+                        if (last_mouse_y >= squares[6].y_start &&
+                            last_mouse_y <= squares[6].y_end)
+                        {
+                            if (input[2][0] < 0)
+                            {
+                                input[2][0] = current_player;
+                                current_player = next_player(current_player,
+                                                             turn);
+                            }
+                        }
                     }
-                }
-                turn = 0;
-                current_player = Player::X;
-                current_game_state = Game_state::GAME;
-                prev_mouse_state = curr_mouse_state;
-                continue;
-            }
 
-            // first column inputs
-            if (last_mouse_x >= squares[0].x_start &&
-                last_mouse_x <= squares[0].x_end)
-            {
-                if (last_mouse_y >= squares[0].y_start &&
-                    last_mouse_y <= squares[0].y_end)
-                {
-                    if (input[0][0] < 0)
+                    // second column inputs
+                    if (last_mouse_x >= squares[1].x_start &&
+                        last_mouse_x <= squares[1].x_end)
                     {
-                        input[0][0] = current_player;
-                        current_player = next_player(current_player, turn);
+                        if (last_mouse_y >= squares[0].y_start &&
+                            last_mouse_y <= squares[0].y_end)
+                        {
+                            if (input[0][1] < 0)
+                            {
+                                input[0][1] = current_player;
+                                current_player = next_player(current_player,
+                                                             turn);
+                            }
+                        }
+                        if (last_mouse_y >= squares[3].y_start &&
+                            last_mouse_y <= squares[3].y_end)
+                        {
+                            if (input[1][1] < 0)
+                            {
+                                input[1][1] = current_player;
+                                current_player = next_player(current_player,
+                                                             turn);
+                            }
+                        }
+                        if (last_mouse_y >= squares[6].y_start &&
+                            last_mouse_y <= squares[6].y_end)
+                        {
+                            if (input[2][1] < 0)
+                            {
+                                input[2][1] = current_player;
+                                current_player = next_player(current_player,
+                                                             turn);
+                            }
+                        }
                     }
-                }
-                if (last_mouse_y >= squares[3].y_start &&
-                    last_mouse_y <= squares[3].y_end)
-                {
-                    if (input[1][0] < 0)
-                    {
-                        input[1][0] = current_player;
-                        current_player = next_player(current_player, turn);
-                    }
-                }
-                if (last_mouse_y >= squares[6].y_start &&
-                    last_mouse_y <= squares[6].y_end)
-                {
-                    if (input[2][0] < 0)
-                    {
-                        input[2][0] = current_player;
-                        current_player = next_player(current_player, turn);
-                    }
-                }
-            }
 
-            // second column inputs
-            if (last_mouse_x >= squares[1].x_start &&
-                last_mouse_x <= squares[1].x_end)
-            {
-                if (last_mouse_y >= squares[0].y_start &&
-                    last_mouse_y <= squares[0].y_end)
-                {
-                    if (input[0][1] < 0)
+                    // third column inputs
+                    if (last_mouse_x >= squares[2].x_start &&
+                        last_mouse_x <= squares[2].x_end)
                     {
-                        input[0][1] = current_player;
-                        current_player = next_player(current_player, turn);
+                        if (last_mouse_y >= squares[0].y_start &&
+                            last_mouse_y <= squares[0].y_end)
+                        {
+                            if (input[0][2] < 0)
+                            {
+                                input[0][2] = current_player;
+                                current_player = next_player(current_player,
+                                                             turn);
+                            }
+                        }
+                        if (last_mouse_y >= squares[3].y_start &&
+                            last_mouse_y <= squares[3].y_end)
+                        {
+                            if (input[1][2] < 0)
+                            {
+                                input[1][2] = current_player;
+                                current_player = next_player(current_player,
+                                                             turn);
+                            }
+                        }
+                        if (last_mouse_y >= squares[6].y_start &&
+                            last_mouse_y <= squares[6].y_end)
+                        {
+                            if (input[2][2] < 0)
+                            {
+                                input[2][2] = current_player;
+                                current_player = next_player(current_player,
+                                                             turn);
+                            }
+                        }
                     }
                 }
-                if (last_mouse_y >= squares[3].y_start &&
-                    last_mouse_y <= squares[3].y_end)
+                glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f,
+                            1.0f, 1.0f);
+                text_color[0] = 1.0f;
+                text_color[1] = 1.0f;
+                text_color[2] = 1.0f;
+                text_color[3] = 1.0f;
+                break;
+            case GAME_STATE::END:
+                if (curr_mouse_state == GLFW_PRESS &&
+                    prev_mouse_state == GLFW_RELEASE)
                 {
-                    if (input[1][1] < 0)
+                    // reset game
+                    for (int i = 0; i < 3; i++)
                     {
-                        input[1][1] = current_player;
-                        current_player = next_player(current_player, turn);
+                        for (int j = 0; j < 3; j++)
+                        {
+                            input[i][j] = -1;
+                        }
                     }
+                    turn = 0;
+                    current_player = Player::X;
+                    current_game_state = GAME_STATE::GAME;
+                    prev_mouse_state = curr_mouse_state;
+                    break;
                 }
-                if (last_mouse_y >= squares[6].y_start &&
-                    last_mouse_y <= squares[6].y_end)
-                {
-                    if (input[2][1] < 0)
-                    {
-                        input[2][1] = current_player;
-                        current_player = next_player(current_player, turn);
-                    }
-                }
-            }
 
-            // third column inputs
-            if (last_mouse_x >= squares[2].x_start &&
-                last_mouse_x <= squares[2].x_end)
-            {
-                if (last_mouse_y >= squares[0].y_start &&
-                    last_mouse_y <= squares[0].y_end)
-                {
-                    if (input[0][2] < 0)
-                    {
-                        input[0][2] = current_player;
-                        current_player = next_player(current_player, turn);
-                    }
-                }
-                if (last_mouse_y >= squares[3].y_start &&
-                    last_mouse_y <= squares[3].y_end)
-                {
-                    if (input[1][2] < 0)
-                    {
-                        input[1][2] = current_player;
-                        current_player = next_player(current_player, turn);
-                    }
-                }
-                if (last_mouse_y >= squares[6].y_start &&
-                    last_mouse_y <= squares[6].y_end)
-                {
-                    if (input[2][2] < 0)
-                    {
-                        input[2][2] = current_player;
-                        current_player = next_player(current_player, turn);
-                    }
-                }
-            }
+                glUniform3f(glGetUniformLocation(shaderProgram, "color"), 0.2f,
+                            0.2f, 0.2f);
+                text_color[0] = 0.2f;
+                text_color[1] = 0.2f;
+                text_color[2] = 0.2f;
+                text_color[3] = 0.2f;
         }
         prev_mouse_state = curr_mouse_state;
 
-        glUseProgram(shaderProgram);
-        if (current_game_state == Game_state::END)
-        {
-            glUniform3f(glGetUniformLocation(shaderProgram, "color"), 0.2f,
-                        0.2f, 0.2f);
-            text_color[0] = 0.2f;
-            text_color[1] = 0.2f;
-            text_color[2] = 0.2f;
-            text_color[3] = 0.2f;
-        } else
-        {
-            glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f,
-                        1.0f, 1.0f);
-            text_color[0] = 1.0f;
-            text_color[1] = 1.0f;
-            text_color[2] = 1.0f;
-            text_color[3] = 1.0f;
-        }
+
         // horizontal lines
         draw_line(0,
                   SCREEN_WIDTH,
@@ -311,7 +321,6 @@ int main()
                   0,
                   SCREEN_HEIGHT
         );
-
 
         // draw X's and O's
         /*
@@ -387,7 +396,7 @@ int main()
 
         if (turn == 9 && find_winner(input) == Player::DRAW)
         {
-            current_game_state = Game_state::END;
+            current_game_state = GAME_STATE::END;
             end_text_renderer.render_text(draw_text,
                                           SCREEN_WIDTH / 2 -
                                           draw_text_size.first / 2,
@@ -402,7 +411,7 @@ int main()
             );
         } else if (turn != 0 && find_winner(input) != Player::DRAW)
         {
-            current_game_state = Game_state::END;
+            current_game_state = GAME_STATE::END;
             end_text_renderer.render_text(
                     (find_winner(input) == 1 ? x_win_text : o_win_text),
                     SCREEN_WIDTH / 2 -
