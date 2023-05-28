@@ -23,9 +23,6 @@ enum GAME_STATE
     GAME, END
 };
 
-
-std::map<int, Square> create_squares();
-
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 Player find_winner(int input[3][3]);
@@ -54,7 +51,9 @@ int main()
 
     glbinding::initialize(glfwGetProcAddress);
 
-    std::map<int, Square> squares = create_squares();
+    Square square;
+    std::map<int, Square> squares = square.create_squares(SCREEN_WIDTH,
+                                                          SCREEN_HEIGHT);
 
     gl_gridlines gridlines(SCREEN_WIDTH, SCREEN_HEIGHT, 10, {1.0f, 0.5f, 0.2f});
 
@@ -195,83 +194,6 @@ int main()
     }
 
     return 0;
-}
-
-std::map<int, Square> create_squares()
-{
-    /*
-     * 0 | 1 | 2
-     * --|---|--
-     * 3 | 4 | 5
-     * --|---|--
-     * 6 | 7 | 8
-     * */
-    std::map<int, Square> squares = {};
-
-    Square zero{}; // 0
-    zero.x_start = 0;
-    zero.x_end = SCREEN_WIDTH / 3;
-    zero.y_start = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
-    zero.y_end = SCREEN_HEIGHT;
-    squares.insert({0, zero});
-
-    Square one{}; // 1
-    one.x_start = SCREEN_WIDTH / 3;
-    one.x_end = SCREEN_WIDTH - SCREEN_WIDTH / 3;
-    one.y_start = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
-    one.y_end = SCREEN_HEIGHT;
-    squares.insert({1, one});
-
-    Square two{}; // 2
-    two.x_start = SCREEN_WIDTH - SCREEN_WIDTH / 3;
-    two.x_end = SCREEN_WIDTH;
-    two.y_start = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
-    two.y_end = SCREEN_HEIGHT;
-    squares.insert({2, two});
-
-    Square three{};
-    three.x_start = 0;
-    three.x_end = SCREEN_WIDTH / 3;
-    three.y_start = SCREEN_HEIGHT / 3;
-    three.y_end = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
-    squares.insert({3, three});
-
-    Square four{};
-    four.x_start = SCREEN_WIDTH / 3;
-    four.x_end = SCREEN_WIDTH - SCREEN_WIDTH / 3;
-    four.y_start = SCREEN_HEIGHT / 3;
-    four.y_end = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
-    squares.insert({4, four});
-
-    Square five{};
-    five.x_start = SCREEN_WIDTH - SCREEN_WIDTH / 3;
-    five.x_end = SCREEN_WIDTH;
-    five.y_start = SCREEN_HEIGHT / 3;
-    five.y_end = SCREEN_HEIGHT - SCREEN_HEIGHT / 3;
-    squares.insert({5, five});
-
-    Square six{}; // 6
-    six.x_start = 0;
-    six.x_end = SCREEN_WIDTH / 3;
-    six.y_start = 0;
-    six.y_end = SCREEN_HEIGHT / 3;
-    squares.insert({6, six});
-
-    Square seven{}; // 7
-    seven.x_start = SCREEN_WIDTH / 3;
-    seven.x_end = SCREEN_WIDTH - SCREEN_WIDTH / 3;
-    seven.y_start = 0;
-    seven.y_end = SCREEN_HEIGHT / 3;
-    squares.insert({7, seven});
-
-    Square eight{}; // 8
-    eight.x_start = SCREEN_WIDTH - SCREEN_WIDTH / 3;
-    eight.x_end = SCREEN_WIDTH;
-    eight.y_start = 0;
-    eight.y_end = SCREEN_HEIGHT / 3;
-    squares.insert({8, eight});
-
-    return squares;
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
