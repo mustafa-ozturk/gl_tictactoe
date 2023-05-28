@@ -75,12 +75,6 @@ int main()
                        GL_FALSE, glm::value_ptr(projection));
     glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
 
-    int input[3][3] = {
-            {-1, -1, -1},
-            {-1, -1, -1},
-            {-1, -1, -1}
-    };
-
     Player current_player = Player::X;
     GAME_STATE current_game_state = GAME_STATE::GAME;
     int turn = 0;
@@ -127,9 +121,9 @@ int main()
                         if (last_mouse_y >= squares[0].y_start &&
                             last_mouse_y <= squares[0].y_end)
                         {
-                            if (input[0][0] < 0)
+                            if (game.input[0][0] < 0)
                             {
-                                input[0][0] = current_player;
+                                game.input[0][0] = current_player;
                                 current_player = next_player(current_player,
                                                              turn);
                             }
@@ -137,9 +131,9 @@ int main()
                         if (last_mouse_y >= squares[3].y_start &&
                             last_mouse_y <= squares[3].y_end)
                         {
-                            if (input[1][0] < 0)
+                            if (game.input[1][0] < 0)
                             {
-                                input[1][0] = current_player;
+                                game.input[1][0] = current_player;
                                 current_player = next_player(current_player,
                                                              turn);
                             }
@@ -147,9 +141,9 @@ int main()
                         if (last_mouse_y >= squares[6].y_start &&
                             last_mouse_y <= squares[6].y_end)
                         {
-                            if (input[2][0] < 0)
+                            if (game.input[2][0] < 0)
                             {
-                                input[2][0] = current_player;
+                                game.input[2][0] = current_player;
                                 current_player = next_player(current_player,
                                                              turn);
                             }
@@ -163,9 +157,9 @@ int main()
                         if (last_mouse_y >= squares[0].y_start &&
                             last_mouse_y <= squares[0].y_end)
                         {
-                            if (input[0][1] < 0)
+                            if (game.input[0][1] < 0)
                             {
-                                input[0][1] = current_player;
+                                game.input[0][1] = current_player;
                                 current_player = next_player(current_player,
                                                              turn);
                             }
@@ -173,9 +167,9 @@ int main()
                         if (last_mouse_y >= squares[3].y_start &&
                             last_mouse_y <= squares[3].y_end)
                         {
-                            if (input[1][1] < 0)
+                            if (game.input[1][1] < 0)
                             {
-                                input[1][1] = current_player;
+                                game.input[1][1] = current_player;
                                 current_player = next_player(current_player,
                                                              turn);
                             }
@@ -183,9 +177,9 @@ int main()
                         if (last_mouse_y >= squares[6].y_start &&
                             last_mouse_y <= squares[6].y_end)
                         {
-                            if (input[2][1] < 0)
+                            if (game.input[2][1] < 0)
                             {
-                                input[2][1] = current_player;
+                                game.input[2][1] = current_player;
                                 current_player = next_player(current_player,
                                                              turn);
                             }
@@ -199,9 +193,9 @@ int main()
                         if (last_mouse_y >= squares[0].y_start &&
                             last_mouse_y <= squares[0].y_end)
                         {
-                            if (input[0][2] < 0)
+                            if (game.input[0][2] < 0)
                             {
-                                input[0][2] = current_player;
+                                game.input[0][2] = current_player;
                                 current_player = next_player(current_player,
                                                              turn);
                             }
@@ -209,9 +203,9 @@ int main()
                         if (last_mouse_y >= squares[3].y_start &&
                             last_mouse_y <= squares[3].y_end)
                         {
-                            if (input[1][2] < 0)
+                            if (game.input[1][2] < 0)
                             {
-                                input[1][2] = current_player;
+                                game.input[1][2] = current_player;
                                 current_player = next_player(current_player,
                                                              turn);
                             }
@@ -219,9 +213,9 @@ int main()
                         if (last_mouse_y >= squares[6].y_start &&
                             last_mouse_y <= squares[6].y_end)
                         {
-                            if (input[2][2] < 0)
+                            if (game.input[2][2] < 0)
                             {
-                                input[2][2] = current_player;
+                                game.input[2][2] = current_player;
                                 current_player = next_player(current_player,
                                                              turn);
                             }
@@ -244,7 +238,7 @@ int main()
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            input[i][j] = -1;
+                            game.input[i][j] = -1;
                         }
                     }
                     turn = 0;
@@ -274,70 +268,70 @@ int main()
          * 6 | 7 | 8
          * */
         // 0
-        if (input[0][0] >= 0)
+        if (game.input[0][0] >= 0)
         {
-            textrenderer.render_text(input[0][0] == 1 ? "X" : "O",
+            textrenderer.render_text(game.input[0][0] == 1 ? "X" : "O",
                                      squares[0].x_start + 38,
                                      squares[0].y_start + 20);
         }
         // 1
-        if (input[0][1] >= 0)
+        if (game.input[0][1] >= 0)
         {
-            textrenderer.render_text(input[0][1] == 1 ? "X" : "O",
+            textrenderer.render_text(game.input[0][1] == 1 ? "X" : "O",
                                      squares[1].x_start + 38,
                                      squares[1].y_start + 20);
         }
         // 2
-        if (input[0][2] >= 0)
+        if (game.input[0][2] >= 0)
         {
-            textrenderer.render_text(input[0][2] == 1 ? "X" : "O",
+            textrenderer.render_text(game.input[0][2] == 1 ? "X" : "O",
                                      squares[2].x_start + 38,
                                      squares[2].y_start + 20);
         }
         // 3
-        if (input[1][0] >= 0)
+        if (game.input[1][0] >= 0)
         {
-            textrenderer.render_text(input[1][0] == 1 ? "X" : "O",
+            textrenderer.render_text(game.input[1][0] == 1 ? "X" : "O",
                                      squares[3].x_start + 38,
                                      squares[3].y_start + 20);
         }
         // 4
-        if (input[1][1] >= 0)
+        if (game.input[1][1] >= 0)
         {
-            textrenderer.render_text(input[1][1] == 1 ? "X" : "O",
+            textrenderer.render_text(game.input[1][1] == 1 ? "X" : "O",
                                      squares[4].x_start + 38,
                                      squares[4].y_start + 20);
         }
         // 5
-        if (input[1][2] >= 0)
+        if (game.input[1][2] >= 0)
         {
-            textrenderer.render_text(input[1][2] == 1 ? "X" : "O",
+            textrenderer.render_text(game.input[1][2] == 1 ? "X" : "O",
                                      squares[5].x_start + 38,
                                      squares[5].y_start + 20);
         }
         // 6
-        if (input[2][0] >= 0)
+        if (game.input[2][0] >= 0)
         {
-            textrenderer.render_text(input[2][0] == 1 ? "X" : "O",
+            textrenderer.render_text(game.input[2][0] == 1 ? "X" : "O",
                                      squares[6].x_start + 38,
                                      squares[6].y_start + 20);
         }
         // 7
-        if (input[2][1] >= 0)
+        if (game.input[2][1] >= 0)
         {
-            textrenderer.render_text(input[2][1] == 1 ? "X" : "O",
+            textrenderer.render_text(game.input[2][1] == 1 ? "X" : "O",
                                      squares[7].x_start + 38,
                                      squares[7].y_start + 20);
         }
         // 8
-        if (input[2][2] >= 0)
+        if (game.input[2][2] >= 0)
         {
-            textrenderer.render_text(input[2][2] == 1 ? "X" : "O",
+            textrenderer.render_text(game.input[2][2] == 1 ? "X" : "O",
                                      squares[8].x_start + 38,
                                      squares[8].y_start + 20);
         }
 
-        if (turn == 9 && find_winner(input) == Player::DRAW)
+        if (turn == 9 && find_winner(game.input) == Player::DRAW)
         {
             current_game_state = GAME_STATE::END;
             end_text_renderer.render_text(draw_text,
@@ -352,16 +346,16 @@ int main()
                                           SCREEN_HEIGHT / 2 -
                                           end_text_size.second / 2 + 2
             );
-        } else if (turn != 0 && find_winner(input) != Player::DRAW)
+        } else if (turn != 0 && find_winner(game.input) != Player::DRAW)
         {
             current_game_state = GAME_STATE::END;
             end_text_renderer.render_text(
-                    (find_winner(input) == 1 ? x_win_text : o_win_text),
+                    (find_winner(game.input) == 1 ? x_win_text : o_win_text),
                     SCREEN_WIDTH / 2 -
-                    ((find_winner(input) == 1 ? x_win_text_size.first
+                    ((find_winner(game.input) == 1 ? x_win_text_size.first
                                               : x_win_text_size.first)) / 2,
                     SCREEN_HEIGHT / 2 -
-                    ((find_winner(input) == 1 ? x_win_text_size.second
+                    ((find_winner(game.input) == 1 ? x_win_text_size.second
                                               : x_win_text_size.second)) / 2 +
                     20
             );
