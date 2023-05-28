@@ -160,11 +160,11 @@ int main()
                                                       : o_win_text),
                         SCREEN_WIDTH / 2 -
                         ((find_winner(game.input) == 1 ? x_win_text_size.first
-                                                       : x_win_text_size.first)) /
+                                                       : o_win_text_size.first)) /
                         2,
                         SCREEN_HEIGHT / 2 -
                         ((find_winner(game.input) == 1 ? x_win_text_size.second
-                                                       : x_win_text_size.second)) /
+                                                       : o_win_text_size.second)) /
                         2 +
                         20
                 );
