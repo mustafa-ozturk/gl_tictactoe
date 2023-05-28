@@ -18,11 +18,6 @@ using namespace gl;
 const unsigned int SCREEN_WIDTH = 510;
 const unsigned int SCREEN_HEIGHT = 510;
 
-enum Player
-{
-    O, X, DRAW
-};
-
 enum GAME_STATE
 {
     GAME, END

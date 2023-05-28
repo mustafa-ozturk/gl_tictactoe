@@ -7,6 +7,11 @@
 
 using namespace gl;
 
+enum Player
+{
+    O, X, DRAW
+};
+
 class Game
 {
 public:
