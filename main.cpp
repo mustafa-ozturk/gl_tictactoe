@@ -10,6 +10,7 @@
 #include "gl_textrenderer/gl_textrenderer.h"
 #include "gl_gridlines/gl_gridlines.h"
 #include "Square/Square.h"
+#include "Game/Game.h"
 
 using namespace gl;
 
@@ -125,6 +126,7 @@ int main()
     std::string o_win_text = "O WINS!";
     auto o_win_text_size = end_text_renderer.get_text_size(o_win_text);
 
+    Game game;
 
     while (!glfwWindowShouldClose(window))
     {
@@ -289,29 +291,7 @@ int main()
         }
         prev_mouse_state = curr_mouse_state;
 
-
-        // horizontal lines
-        draw_line(0,
-                  SCREEN_WIDTH,
-                  SCREEN_HEIGHT / 3,
-                  SCREEN_HEIGHT / 3
-        );
-        draw_line(0,
-                  SCREEN_WIDTH,
-                  SCREEN_HEIGHT - SCREEN_HEIGHT / 3,
-                  SCREEN_HEIGHT - SCREEN_HEIGHT / 3
-        );
-        // vertical lines
-        draw_line(SCREEN_WIDTH / 3,
-                  SCREEN_WIDTH / 3,
-                  0,
-                  SCREEN_HEIGHT
-        );
-        draw_line(SCREEN_WIDTH - SCREEN_WIDTH / 3,
-                  SCREEN_WIDTH - SCREEN_WIDTH / 3,
-                  0,
-                  SCREEN_HEIGHT
-        );
+        game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // draw X's and O's
         /*
