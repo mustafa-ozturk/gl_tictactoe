@@ -52,7 +52,7 @@ public:
     void set_color_light();
 
     void
-    draw_endgame_text(int screen_width, int screen_height, Player end_state,
+    draw_endgame_text(Player end_state,
                       std::string x_win_text, std::string o_win_text,
                       std::pair<int, int> x_win_text_size,
                       std::pair<int, int> o_win_text_size,
