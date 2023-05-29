@@ -1,7 +1,11 @@
 #include "Game.h"
 
-void Game::draw_lines(int screen_width, int screen_height)
+void Game::draw_lines(int screen_width, int screen_height, float colors[4],
+                      unsigned int shaderProgram)
 {
+    glUseProgram(shaderProgram);
+    glUniform4f(glGetUniformLocation(shaderProgram, "color"), colors[0],
+                colors[1], colors[2], colors[3]);
     draw_line(0,
               screen_width,
               screen_height / 3,
@@ -78,8 +82,12 @@ std::string Game::map_player(int input_value)
 }
 
 void Game::draw_input(gl_textrenderer& textrenderer,
-                      std::map<int, Square>& squares)
+                      std::map<int, Square>& squares, float colors[4],
+                      unsigned int shaderProgram)
 {
+    glUseProgram(shaderProgram);
+    glUniform4f(glGetUniformLocation(shaderProgram, "color"), colors[0],
+                colors[1], colors[2], colors[3]);
     // draw X's and O's
     /*
      * 0 | 1 | 2
