@@ -91,7 +91,6 @@ int main()
                                      {text_color[0], text_color[1],
                                       text_color[2], text_color[3]});
 
-        glUseProgram(shaderProgram);
         int curr_mouse_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1);
         switch (current_game_state)
         {
@@ -102,12 +101,14 @@ int main()
                     game.process_input(last_mouse_x, last_mouse_y, squares,
                                        current_player, turn);
                 }
-                glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f,
-                            1.0f, 1.0f);
                 text_color[0] = 1.0f;
                 text_color[1] = 1.0f;
                 text_color[2] = 1.0f;
                 text_color[3] = 1.0f;
+                game.draw_input(textrenderer, squares, text_color,
+                                shaderProgram);
+                game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, text_color,
+                                shaderProgram);
                 break;
             case GAME_STATE::END:
                 if (curr_mouse_state == GLFW_PRESS &&
@@ -118,17 +119,16 @@ int main()
                     break;
                 }
 
-                glUniform3f(glGetUniformLocation(shaderProgram, "color"), 0.2f,
-                            0.2f, 0.2f);
                 text_color[0] = 0.2f;
                 text_color[1] = 0.2f;
                 text_color[2] = 0.2f;
                 text_color[3] = 0.2f;
+                game.draw_input(textrenderer, squares, text_color,
+                                shaderProgram);
+                game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, text_color,
+                                shaderProgram);
         }
         prev_mouse_state = curr_mouse_state;
-
-        game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT);
-        game.draw_input(textrenderer, squares);
 
 
         const Player end_state = game.find_winner();
