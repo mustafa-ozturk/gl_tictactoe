@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <glbinding/gl/gl.h>
+#include <GLFW/glfw3.h>
 #include "gl_textrenderer/gl_textrenderer.h"
 #include "Square/Square.h"
 
@@ -42,8 +43,7 @@ public:
                        int& turn);
 
     void reset(int& turn, Player& current_player,
-               GAME_STATE& current_game_state, int& prev_mouse_state,
-               int& curr_mouse_state);
+               GAME_STATE& current_game_state);
 
     Player find_winner();
 
@@ -52,6 +52,9 @@ public:
     void set_color_light();
 
     float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+
+    int curr_mouse_state;
+    int prev_mouse_state;
 private:
 
     void draw_line(int x_start, int x_end, int y_start, int y_end);
