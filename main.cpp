@@ -58,7 +58,7 @@ int main()
                        GL_FALSE, glm::value_ptr(projection));
     glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
 
-    END_GAME_STATES current_player = END_GAME_STATES::X;
+    END_GAME_STATES current_player = END_GAME_STATES::X_WINS;
     GAME_STATE current_game_state = GAME_STATE::GAME;
     int turn = 0;
 

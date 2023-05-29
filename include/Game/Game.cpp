@@ -280,12 +280,12 @@ void Game::process_input(int last_mouse_x, int last_mouse_y,
 END_GAME_STATES Game::next_player(END_GAME_STATES current_player, int& turn)
 {
     turn++;
-    if (current_player == END_GAME_STATES::X)
+    if (current_player == END_GAME_STATES::X_WINS)
     {
         return END_GAME_STATES::O_WINS;
     } else
     {
-        return END_GAME_STATES::X;
+        return END_GAME_STATES::X_WINS;
     }
 }
 
@@ -301,7 +301,7 @@ void Game::reset(int& turn, END_GAME_STATES& current_player,
         }
     }
     turn = 0;
-    current_player = END_GAME_STATES::X;
+    current_player = END_GAME_STATES::X_WINS;
     current_game_state = GAME_STATE::GAME;
     prev_mouse_state = curr_mouse_state;
 }
