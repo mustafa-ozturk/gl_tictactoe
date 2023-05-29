@@ -117,42 +117,11 @@ int main()
                 game.draw_input(textrenderer, squares, shaderProgram);
                 game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, shaderProgram);
 
-                if (end_state != Player::DRAW)
-                {
-                    end_text_renderer.render_text(
-                            (end_state == 1 ? x_win_text
-                                            : o_win_text),
-                            SCREEN_WIDTH / 2 -
-                            ((end_state == 1 ? x_win_text_size.first
-                                             : o_win_text_size.first)) /
-                            2,
-                            SCREEN_HEIGHT / 2 -
-                            ((end_state == 1 ? x_win_text_size.second
-                                             : o_win_text_size.second)) /
-                            2 +
-                            20
-                    );
-                    end_text_renderer.render_text(end_text, SCREEN_WIDTH / 2 -
-                                                            end_text_size.first /
-                                                            2,
-                                                  SCREEN_HEIGHT / 2 -
-                                                  end_text_size.second / 2 + 2);
-                } else
-                {
-                    current_game_state = GAME_STATE::END;
-                    end_text_renderer.render_text(draw_text,
-                                                  SCREEN_WIDTH / 2 -
-                                                  draw_text_size.first / 2,
-                                                  SCREEN_HEIGHT / 2 -
-                                                  draw_text_size.second / 2 + 20
-                    );
-                    end_text_renderer.render_text(end_text,
-                                                  SCREEN_WIDTH / 2 -
-                                                  end_text_size.first / 2,
-                                                  SCREEN_HEIGHT / 2 -
-                                                  end_text_size.second / 2 + 2
-                    );
-                }
+                game.draw_endgame_text(SCREEN_WIDTH, SCREEN_HEIGHT, end_state,
+                                       x_win_text, o_win_text, x_win_text_size,
+                                       o_win_text_size, end_text_size,
+                                       draw_text_size, end_text_renderer,
+                                       end_text, draw_text);
         }
         game.prev_mouse_state = game.curr_mouse_state;
 

@@ -51,6 +51,17 @@ public:
 
     void set_color_light();
 
+    void
+    draw_endgame_text(int screen_width, int screen_height, Player end_state,
+                      std::string x_win_text, std::string o_win_text,
+                      std::pair<int, int> x_win_text_size,
+                      std::pair<int, int> o_win_text_size,
+                      std::pair<int, int> end_text_size,
+                      std::pair<int, int> draw_text_size,
+                      gl_textrenderer& end_text_renderer,
+                      std::string end_text, std::string draw_text
+    );
+
     float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
     int curr_mouse_state;

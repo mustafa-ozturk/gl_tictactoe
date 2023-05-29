@@ -373,3 +373,51 @@ void Game::set_color_light()
     text_color[2] = 1.0f;
     text_color[3] = 1.0f;
 }
+
+void
+Game::draw_endgame_text(int screen_width, int screen_height, Player end_state,
+                        std::string x_win_text, std::string o_win_text,
+                        std::pair<int, int> x_win_text_size,
+                        std::pair<int, int> o_win_text_size,
+                        std::pair<int, int> end_text_size,
+                        std::pair<int, int> draw_text_size,
+                        gl_textrenderer& end_text_renderer,
+                        std::string end_text, std::string draw_text
+)
+{
+    if (end_state != Player::DRAW)
+    {
+        end_text_renderer.render_text(
+                (end_state == 1 ? x_win_text
+                                : o_win_text),
+                screen_width / 2 -
+                ((end_state == 1 ? x_win_text_size.first
+                                 : o_win_text_size.first)) /
+                2,
+                screen_height / 2 -
+                ((end_state == 1 ? x_win_text_size.second
+                                 : o_win_text_size.second)) /
+                2 +
+                20
+        );
+        end_text_renderer.render_text(end_text, screen_width / 2 -
+                                                end_text_size.first /
+                                                2,
+                                      screen_height / 2 -
+                                      end_text_size.second / 2 + 2);
+    } else
+    {
+        end_text_renderer.render_text(draw_text,
+                                      screen_width / 2 -
+                                      draw_text_size.first / 2,
+                                      screen_height / 2 -
+                                      draw_text_size.second / 2 + 20
+        );
+        end_text_renderer.render_text(end_text,
+                                      screen_width / 2 -
+                                      end_text_size.first / 2,
+                                      screen_height / 2 -
+                                      end_text_size.second / 2 + 2
+        );
+    }
+}
