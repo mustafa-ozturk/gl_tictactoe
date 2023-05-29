@@ -10,7 +10,7 @@ using namespace gl;
 
 enum END_GAME_STATES
 {
-    O, X, DRAW
+    O_WINS, X, DRAW
 };
 
 enum GAME_STATE

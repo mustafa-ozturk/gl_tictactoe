@@ -282,7 +282,7 @@ END_GAME_STATES Game::next_player(END_GAME_STATES current_player, int& turn)
     turn++;
     if (current_player == END_GAME_STATES::X)
     {
-        return END_GAME_STATES::O;
+        return END_GAME_STATES::O_WINS;
     } else
     {
         return END_GAME_STATES::X;
