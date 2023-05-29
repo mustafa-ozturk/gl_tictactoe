@@ -24,8 +24,8 @@ public:
 
     ~Game() = default;
 
-    void draw_lines(int screen_width, int screen_height, float colors[4],
-                    unsigned int shaderProgram);
+    void
+    draw_lines(int screen_width, int screen_height, unsigned int shaderProgram);
 
     int input[3][3] = {
             {-1, -1, -1},
@@ -33,9 +33,9 @@ public:
             {-1, -1, -1}
     };
 
-    void draw_input(gl_textrenderer& textrenderer,
-                    std::map<int, Square>& squares, float colors[4],
-                    unsigned int shaderProgram);
+    void
+    draw_input(gl_textrenderer& textrenderer, std::map<int, Square>& squares,
+               unsigned int shaderProgram);
 
     void process_input(int last_mouse_x, int last_mouse_y,
                        std::map<int, Square>& squares, Player& current_player,
@@ -47,7 +47,13 @@ public:
 
     Player find_winner();
 
+    void set_color_dark();
+
+    void set_color_light();
+
+    float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 private:
+
     void draw_line(int x_start, int x_end, int y_start, int y_end);
 
     std::string map_player(int input_value);

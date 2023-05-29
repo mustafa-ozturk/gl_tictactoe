@@ -1,11 +1,11 @@
 #include "Game.h"
 
-void Game::draw_lines(int screen_width, int screen_height, float colors[4],
+void Game::draw_lines(int screen_width, int screen_height,
                       unsigned int shaderProgram)
 {
     glUseProgram(shaderProgram);
-    glUniform4f(glGetUniformLocation(shaderProgram, "color"), colors[0],
-                colors[1], colors[2], colors[3]);
+    glUniform4f(glGetUniformLocation(shaderProgram, "color"), text_color[0],
+                text_color[1], text_color[2], text_color[3]);
     draw_line(0,
               screen_width,
               screen_height / 3,
@@ -82,12 +82,12 @@ std::string Game::map_player(int input_value)
 }
 
 void Game::draw_input(gl_textrenderer& textrenderer,
-                      std::map<int, Square>& squares, float colors[4],
+                      std::map<int, Square>& squares,
                       unsigned int shaderProgram)
 {
     glUseProgram(shaderProgram);
-    glUniform4f(glGetUniformLocation(shaderProgram, "color"), colors[0],
-                colors[1], colors[2], colors[3]);
+    glUniform4f(glGetUniformLocation(shaderProgram, "color"), text_color[0],
+                text_color[1], text_color[2], text_color[3]);
     // draw X's and O's
     /*
      * 0 | 1 | 2
@@ -353,4 +353,20 @@ Player Game::find_winner()
         }
     }
     return Player::DRAW;
+}
+
+void Game::set_color_dark()
+{
+    text_color[0] = 0.2f;
+    text_color[1] = 0.2f;
+    text_color[2] = 0.2f;
+    text_color[3] = 0.2f;
+}
+
+void Game::set_color_light()
+{
+    text_color[0] = 1.0f;
+    text_color[1] = 1.0f;
+    text_color[2] = 1.0f;
+    text_color[3] = 1.0f;
 }
