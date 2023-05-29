@@ -63,7 +63,6 @@ int main()
     Player current_player = Player::X;
     GAME_STATE current_game_state = GAME_STATE::GAME;
     int turn = 0;
-    float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
     gl_textrenderer end_text_renderer(SCREEN_WIDTH, SCREEN_HEIGHT,
                                       "assets/UbuntuMono-R.ttf", 20,
@@ -88,8 +87,8 @@ int main()
         // FIXME: add color param to draw call of gl_textrenderer
         gl_textrenderer textrenderer(SCREEN_WIDTH, SCREEN_HEIGHT,
                                      "assets/UbuntuMono-R.ttf", 208,
-                                     {text_color[0], text_color[1],
-                                      text_color[2], text_color[3]});
+                                     {game.text_color[0], game.text_color[1],
+                                      game.text_color[2], game.text_color[3]});
 
         int curr_mouse_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1);
         switch (current_game_state)
@@ -101,14 +100,10 @@ int main()
                     game.process_input(last_mouse_x, last_mouse_y, squares,
                                        current_player, turn);
                 }
-                text_color[0] = 1.0f;
-                text_color[1] = 1.0f;
-                text_color[2] = 1.0f;
-                text_color[3] = 1.0f;
-                game.draw_input(textrenderer, squares, text_color,
-                                shaderProgram);
-                game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, text_color,
-                                shaderProgram);
+
+                game.set_color_light();
+                game.draw_input(textrenderer, squares, shaderProgram);
+                game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, shaderProgram);
                 break;
             case GAME_STATE::END:
                 if (curr_mouse_state == GLFW_PRESS &&
@@ -119,14 +114,9 @@ int main()
                     break;
                 }
 
-                text_color[0] = 0.2f;
-                text_color[1] = 0.2f;
-                text_color[2] = 0.2f;
-                text_color[3] = 0.2f;
-                game.draw_input(textrenderer, squares, text_color,
-                                shaderProgram);
-                game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, text_color,
-                                shaderProgram);
+                game.set_color_dark();
+                game.draw_input(textrenderer, squares, shaderProgram);
+                game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, shaderProgram);
         }
         prev_mouse_state = curr_mouse_state;
 
