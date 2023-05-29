@@ -26,7 +26,7 @@ public:
     ~Game() = default;
 
     void
-    draw_lines(int screen_width, int screen_height, unsigned int shaderProgram);
+    draw_lines(unsigned int shaderProgram);
 
     int input[3][3] = {
             {-1, -1, -1},

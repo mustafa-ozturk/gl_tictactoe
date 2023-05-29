@@ -1,7 +1,6 @@
 #include "Game.h"
 
-void Game::draw_lines(int screen_width, int screen_height,
-                      unsigned int shaderProgram)
+void Game::draw_lines(unsigned int shaderProgram)
 {
     glUseProgram(shaderProgram);
     glUniform4f(glGetUniformLocation(shaderProgram, "color"), text_color[0],

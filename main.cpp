@@ -98,7 +98,7 @@ int main()
                                    current_player, turn);
                 game.set_color_light();
                 game.draw_input(textrenderer, squares, shaderProgram);
-                game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, shaderProgram);
+                game.draw_lines(shaderProgram);
 
                 if (turn == 9 || end_state != Player::DRAW)
                 {
@@ -115,7 +115,7 @@ int main()
 
                 game.set_color_dark();
                 game.draw_input(textrenderer, squares, shaderProgram);
-                game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, shaderProgram);
+                game.draw_lines(shaderProgram);
 
                 game.draw_endgame_text(SCREEN_WIDTH, SCREEN_HEIGHT, end_state,
                                        x_win_text, o_win_text, x_win_text_size,
