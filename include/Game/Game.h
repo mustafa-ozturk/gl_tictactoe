@@ -34,12 +34,12 @@ public:
             {-1, -1, -1}
     };
 
-    void
-    draw_input(gl_textrenderer& textrenderer, std::map<int, Square>& squares,
-               unsigned int shaderProgram);
+    void draw_input(gl_textrenderer& textrenderer, std::map<int,
+            Square>& squares, unsigned int shaderProgram);
 
     void process_input(int last_mouse_x, int last_mouse_y,
-                       std::map<int, Square>& squares, END_GAME_STATES& current_player,
+                       std::map<int, Square>& squares,
+                       END_GAME_STATES& current_player,
                        int& turn);
 
     void reset(int& turn, END_GAME_STATES& current_player,
@@ -69,6 +69,7 @@ public:
 private:
     int screen_width;
     int screen_height;
+
     void draw_line(int x_start, int x_end, int y_start, int y_end);
 
     std::string map_player(int input_value);
