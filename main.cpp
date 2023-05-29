@@ -87,6 +87,7 @@ int main()
                                      "assets/UbuntuMono-R.ttf", 208,
                                      {game.text_color[0], game.text_color[1],
                                       game.text_color[2], game.text_color[3]});
+        const Player end_state = game.find_winner();
 
         game.curr_mouse_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1);
         switch (current_game_state)
@@ -98,6 +99,11 @@ int main()
                 game.set_color_light();
                 game.draw_input(textrenderer, squares, shaderProgram);
                 game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, shaderProgram);
+
+                if (turn == 9 || end_state != Player::DRAW)
+                {
+                    current_game_state = GAME_STATE::END;
+                }
                 break;
             case GAME_STATE::END:
                 if (game.curr_mouse_state == GLFW_PRESS &&
@@ -110,50 +116,45 @@ int main()
                 game.set_color_dark();
                 game.draw_input(textrenderer, squares, shaderProgram);
                 game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, shaderProgram);
+
+                if (end_state != Player::DRAW)
+                {
+                    end_text_renderer.render_text(
+                            (end_state == 1 ? x_win_text
+                                            : o_win_text),
+                            SCREEN_WIDTH / 2 -
+                            ((end_state == 1 ? x_win_text_size.first
+                                             : o_win_text_size.first)) /
+                            2,
+                            SCREEN_HEIGHT / 2 -
+                            ((end_state == 1 ? x_win_text_size.second
+                                             : o_win_text_size.second)) /
+                            2 +
+                            20
+                    );
+                    end_text_renderer.render_text(end_text, SCREEN_WIDTH / 2 -
+                                                            end_text_size.first /
+                                                            2,
+                                                  SCREEN_HEIGHT / 2 -
+                                                  end_text_size.second / 2 + 2);
+                } else
+                {
+                    current_game_state = GAME_STATE::END;
+                    end_text_renderer.render_text(draw_text,
+                                                  SCREEN_WIDTH / 2 -
+                                                  draw_text_size.first / 2,
+                                                  SCREEN_HEIGHT / 2 -
+                                                  draw_text_size.second / 2 + 20
+                    );
+                    end_text_renderer.render_text(end_text,
+                                                  SCREEN_WIDTH / 2 -
+                                                  end_text_size.first / 2,
+                                                  SCREEN_HEIGHT / 2 -
+                                                  end_text_size.second / 2 + 2
+                    );
+                }
         }
         game.prev_mouse_state = game.curr_mouse_state;
-
-
-        const Player end_state = game.find_winner();
-        if (turn == 9 || end_state != Player::DRAW)
-        {
-            if (end_state != Player::DRAW)
-            {
-                current_game_state = GAME_STATE::END;
-                end_text_renderer.render_text(
-                        (end_state == 1 ? x_win_text
-                                        : o_win_text),
-                        SCREEN_WIDTH / 2 -
-                        ((end_state == 1 ? x_win_text_size.first
-                                         : o_win_text_size.first)) /
-                        2,
-                        SCREEN_HEIGHT / 2 -
-                        ((end_state == 1 ? x_win_text_size.second
-                                         : o_win_text_size.second)) /
-                        2 +
-                        20
-                );
-                end_text_renderer.render_text(end_text, SCREEN_WIDTH / 2 -
-                                                        end_text_size.first / 2,
-                                              SCREEN_HEIGHT / 2 -
-                                              end_text_size.second / 2 + 2);
-            } else
-            {
-                current_game_state = GAME_STATE::END;
-                end_text_renderer.render_text(draw_text,
-                                              SCREEN_WIDTH / 2 -
-                                              draw_text_size.first / 2,
-                                              SCREEN_HEIGHT / 2 -
-                                              draw_text_size.second / 2 + 20
-                );
-                end_text_renderer.render_text(end_text,
-                                              SCREEN_WIDTH / 2 -
-                                              end_text_size.first / 2,
-                                              SCREEN_HEIGHT / 2 -
-                                              end_text_size.second / 2 + 2
-                );
-            }
-        }
 
         glfwSwapBuffers(window);
         glfwPollEvents();
