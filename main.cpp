@@ -74,7 +74,7 @@ int main()
     std::string o_win_text = "O WINS!";
     auto o_win_text_size = end_text_renderer.get_text_size(o_win_text);
 
-    Game game;
+    Game game(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     while (!glfwWindowShouldClose(window))
     {

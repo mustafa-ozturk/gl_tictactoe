@@ -421,3 +421,9 @@ Game::draw_endgame_text(int screen_width, int screen_height, Player end_state,
         );
     }
 }
+
+Game::Game(int screen_width, int screen_height)
+    : screen_width(screen_width), screen_height(screen_height)
+{
+
+}

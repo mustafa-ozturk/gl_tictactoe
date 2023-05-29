@@ -21,7 +21,7 @@ enum GAME_STATE
 class Game
 {
 public:
-    Game() = default;
+    Game(int screen_width, int screen_height);
 
     ~Game() = default;
 
@@ -67,7 +67,8 @@ public:
     int curr_mouse_state;
     int prev_mouse_state;
 private:
-
+    int screen_width;
+    int screen_height;
     void draw_line(int x_start, int x_end, int y_start, int y_end);
 
     std::string map_player(int input_value);
