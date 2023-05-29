@@ -117,6 +117,7 @@ int main()
                 game.draw_input(textrenderer, squares, shaderProgram);
                 game.draw_lines(shaderProgram);
 
+                // FIXME: too many params
                 game.draw_endgame_text(end_state,
                                        x_win_text, o_win_text, x_win_text_size,
                                        o_win_text_size, end_text_size,
