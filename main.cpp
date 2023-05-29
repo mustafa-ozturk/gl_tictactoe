@@ -23,8 +23,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 int last_mouse_x = 0;
 int last_mouse_y = 0;
 
-int prev_mouse_state = GLFW_RELEASE;
-
 int main()
 {
     if (!glfwInit()) return -1;
@@ -90,27 +88,22 @@ int main()
                                      {game.text_color[0], game.text_color[1],
                                       game.text_color[2], game.text_color[3]});
 
-        int curr_mouse_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1);
+        game.curr_mouse_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1);
         switch (current_game_state)
         {
             case GAME_STATE::GAME:
-                if (curr_mouse_state == GLFW_PRESS &&
-                    prev_mouse_state == GLFW_RELEASE)
-                {
-                    game.process_input(last_mouse_x, last_mouse_y, squares,
-                                       current_player, turn);
-                }
 
+                game.process_input(last_mouse_x, last_mouse_y, squares,
+                                   current_player, turn);
                 game.set_color_light();
                 game.draw_input(textrenderer, squares, shaderProgram);
                 game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, shaderProgram);
                 break;
             case GAME_STATE::END:
-                if (curr_mouse_state == GLFW_PRESS &&
-                    prev_mouse_state == GLFW_RELEASE)
+                if (game.curr_mouse_state == GLFW_PRESS &&
+                    game.prev_mouse_state == GLFW_RELEASE)
                 {
-                    game.reset(turn, current_player, current_game_state,
-                               prev_mouse_state, curr_mouse_state);
+                    game.reset(turn, current_player, current_game_state);
                     break;
                 }
 
@@ -118,7 +111,7 @@ int main()
                 game.draw_input(textrenderer, squares, shaderProgram);
                 game.draw_lines(SCREEN_WIDTH, SCREEN_HEIGHT, shaderProgram);
         }
-        prev_mouse_state = curr_mouse_state;
+        game.prev_mouse_state = game.curr_mouse_state;
 
 
         const Player end_state = game.find_winner();
