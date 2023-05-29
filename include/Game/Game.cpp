@@ -161,7 +161,7 @@ void Game::draw_input(gl_textrenderer& textrenderer,
 }
 
 void Game::process_input(int last_mouse_x, int last_mouse_y,
-                         std::map<int, Square>& squares, Player& current_player,
+                         std::map<int, Square>& squares, END_GAME_STATES& current_player,
                          int& turn)
 {
 
@@ -277,19 +277,19 @@ void Game::process_input(int last_mouse_x, int last_mouse_y,
     }
 }
 
-Player Game::next_player(Player current_player, int& turn)
+END_GAME_STATES Game::next_player(END_GAME_STATES current_player, int& turn)
 {
     turn++;
-    if (current_player == Player::X)
+    if (current_player == END_GAME_STATES::X)
     {
-        return Player::O;
+        return END_GAME_STATES::O;
     } else
     {
-        return Player::X;
+        return END_GAME_STATES::X;
     }
 }
 
-void Game::reset(int& turn, Player& current_player,
+void Game::reset(int& turn, END_GAME_STATES& current_player,
                  GAME_STATE& current_game_state)
 {
     // reset game
@@ -301,12 +301,12 @@ void Game::reset(int& turn, Player& current_player,
         }
     }
     turn = 0;
-    current_player = Player::X;
+    current_player = END_GAME_STATES::X;
     current_game_state = GAME_STATE::GAME;
     prev_mouse_state = curr_mouse_state;
 }
 
-Player Game::find_winner()
+END_GAME_STATES Game::find_winner()
 {
     for (int player = 0; player < 2; player++)
     {
@@ -314,47 +314,47 @@ Player Game::find_winner()
         if (input[0][0] == player && input[0][1] == player &&
             input[0][2] == player)
         {
-            return static_cast<Player>(player);
+            return static_cast<END_GAME_STATES>(player);
         }
         if (input[1][0] == player && input[1][1] == player &&
             input[1][2] == player)
         {
-            return static_cast<Player>(player);
+            return static_cast<END_GAME_STATES>(player);
         }
         if (input[2][0] == player && input[2][1] == player &&
             input[2][2] == player)
         {
-            return static_cast<Player>(player);
+            return static_cast<END_GAME_STATES>(player);
         }
         // vertical checks
         if (input[0][0] == player && input[1][0] == player &&
             input[2][0] == player)
         {
-            return static_cast<Player>(player);
+            return static_cast<END_GAME_STATES>(player);
         }
         if (input[0][1] == player && input[1][1] == player &&
             input[2][1] == player)
         {
-            return static_cast<Player>(player);
+            return static_cast<END_GAME_STATES>(player);
         }
         if (input[0][2] == player && input[1][2] == player &&
             input[2][2] == player)
         {
-            return static_cast<Player>(player);
+            return static_cast<END_GAME_STATES>(player);
         }
         // cross checks
         if (input[0][0] == player && input[1][1] == player &&
             input[2][2] == player)
         {
-            return static_cast<Player>(player);
+            return static_cast<END_GAME_STATES>(player);
         }
         if (input[0][2] == player && input[1][1] == player &&
             input[2][0] == player)
         {
-            return static_cast<Player>(player);
+            return static_cast<END_GAME_STATES>(player);
         }
     }
-    return Player::DRAW;
+    return END_GAME_STATES::DRAW;
 }
 
 void Game::set_color_dark()
@@ -374,7 +374,7 @@ void Game::set_color_light()
 }
 
 void
-Game::draw_endgame_text(Player end_state,
+Game::draw_endgame_text(END_GAME_STATES end_state,
                         std::string x_win_text, std::string o_win_text,
                         std::pair<int, int> x_win_text_size,
                         std::pair<int, int> o_win_text_size,
@@ -384,7 +384,7 @@ Game::draw_endgame_text(Player end_state,
                         std::string end_text, std::string draw_text
 )
 {
-    if (end_state != Player::DRAW)
+    if (end_state != END_GAME_STATES::DRAW)
     {
         end_text_renderer.render_text(
                 (end_state == 1 ? x_win_text

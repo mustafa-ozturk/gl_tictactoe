@@ -8,7 +8,7 @@
 
 using namespace gl;
 
-enum Player
+enum END_GAME_STATES
 {
     O, X, DRAW
 };
@@ -39,20 +39,20 @@ public:
                unsigned int shaderProgram);
 
     void process_input(int last_mouse_x, int last_mouse_y,
-                       std::map<int, Square>& squares, Player& current_player,
+                       std::map<int, Square>& squares, END_GAME_STATES& current_player,
                        int& turn);
 
-    void reset(int& turn, Player& current_player,
+    void reset(int& turn, END_GAME_STATES& current_player,
                GAME_STATE& current_game_state);
 
-    Player find_winner();
+    END_GAME_STATES find_winner();
 
     void set_color_dark();
 
     void set_color_light();
 
     void
-    draw_endgame_text(Player end_state,
+    draw_endgame_text(END_GAME_STATES end_state,
                       std::string x_win_text, std::string o_win_text,
                       std::pair<int, int> x_win_text_size,
                       std::pair<int, int> o_win_text_size,
@@ -73,5 +73,5 @@ private:
 
     std::string map_player(int input_value);
 
-    Player next_player(Player current_player, int& turn);
+    END_GAME_STATES next_player(END_GAME_STATES current_player, int& turn);
 };

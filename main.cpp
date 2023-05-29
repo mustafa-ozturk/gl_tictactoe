@@ -58,7 +58,7 @@ int main()
                        GL_FALSE, glm::value_ptr(projection));
     glUniform3f(glGetUniformLocation(shaderProgram, "color"), 1.0f, 1.0f, 1.0f);
 
-    Player current_player = Player::X;
+    END_GAME_STATES current_player = END_GAME_STATES::X;
     GAME_STATE current_game_state = GAME_STATE::GAME;
     int turn = 0;
 
@@ -87,7 +87,7 @@ int main()
                                      "assets/UbuntuMono-R.ttf", 208,
                                      {game.text_color[0], game.text_color[1],
                                       game.text_color[2], game.text_color[3]});
-        const Player end_state = game.find_winner();
+        const END_GAME_STATES end_state = game.find_winner();
 
         game.curr_mouse_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1);
         switch (current_game_state)
@@ -100,7 +100,7 @@ int main()
                 game.draw_input(textrenderer, squares, shaderProgram);
                 game.draw_lines(shaderProgram);
 
-                if (turn == 9 || end_state != Player::DRAW)
+                if (turn == 9 || end_state != END_GAME_STATES::DRAW)
                 {
                     current_game_state = GAME_STATE::END;
                 }
