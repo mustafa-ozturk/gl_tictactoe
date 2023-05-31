@@ -74,11 +74,14 @@ int main()
         // FIXME: add color param to draw call of gl_textrenderer
         gl_textrenderer textrenderer(SCREEN_WIDTH, SCREEN_HEIGHT,
                                      "assets/UbuntuMono-R.ttf", 208,
-                                     {game.get_text_color()[0], game.get_text_color()[1],
-                                      game.get_text_color()[2], game.get_text_color()[3]});
+                                     {game.get_text_color()[0],
+                                      game.get_text_color()[1],
+                                      game.get_text_color()[2],
+                                      game.get_text_color()[3]});
         const END_GAME_STATES end_state = game.find_winner();
 
-        game.set_curr_mouse_state(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1));
+        game.set_curr_mouse_state(
+                glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1));
         switch (current_game_state)
         {
             case GAME_STATE::GAME:
