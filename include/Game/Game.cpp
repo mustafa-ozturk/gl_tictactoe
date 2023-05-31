@@ -3,8 +3,8 @@
 void Game::draw_lines(unsigned int shaderProgram)
 {
     glUseProgram(shaderProgram);
-    glUniform4f(glGetUniformLocation(shaderProgram, "color"), text_color[0],
-                text_color[1], text_color[2], text_color[3]);
+    glUniform4f(glGetUniformLocation(shaderProgram, "color"), m_text_color[0],
+                m_text_color[1], m_text_color[2], m_text_color[3]);
     draw_line(0,
               m_screen_width,
               m_screen_height / 3,
@@ -85,8 +85,8 @@ void Game::draw_input(gl_textrenderer& textrenderer,
                       unsigned int shaderProgram)
 {
     glUseProgram(shaderProgram);
-    glUniform4f(glGetUniformLocation(shaderProgram, "color"), text_color[0],
-                text_color[1], text_color[2], text_color[3]);
+    glUniform4f(glGetUniformLocation(shaderProgram, "color"), m_text_color[0],
+                m_text_color[1], m_text_color[2], m_text_color[3]);
     // draw X's and O's
     /*
      * 0 | 1 | 2
@@ -360,18 +360,18 @@ END_GAME_STATES Game::find_winner()
 
 void Game::set_color_dark()
 {
-    text_color[0] = 0.2f;
-    text_color[1] = 0.2f;
-    text_color[2] = 0.2f;
-    text_color[3] = 0.2f;
+    m_text_color[0] = 0.2f;
+    m_text_color[1] = 0.2f;
+    m_text_color[2] = 0.2f;
+    m_text_color[3] = 0.2f;
 }
 
 void Game::set_color_light()
 {
-    text_color[0] = 1.0f;
-    text_color[1] = 1.0f;
-    text_color[2] = 1.0f;
-    text_color[3] = 1.0f;
+    m_text_color[0] = 1.0f;
+    m_text_color[1] = 1.0f;
+    m_text_color[2] = 1.0f;
+    m_text_color[3] = 1.0f;
 }
 
 void Game::draw_endgame_text(END_GAME_STATES end_state,
@@ -427,4 +427,9 @@ Game::Game(int screen_width, int screen_height)
         : m_screen_width(screen_width), m_screen_height(screen_height)
 {
 
+}
+
+std::array<float, 4> Game::get_text_color()
+{
+    return m_text_color;
 }

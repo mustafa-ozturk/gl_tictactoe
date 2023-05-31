@@ -54,11 +54,13 @@ public:
     void draw_endgame_text(END_GAME_STATES end_state,
                            gl_textrenderer& end_text_renderer);
 
-    float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+    std::array<float, 4> get_text_color();
 
     int curr_mouse_state;
     int prev_mouse_state;
+
 private:
+    std::array<float, 4> m_text_color = {1.0f, 1.0f, 1.0f, 1.0f};
     int m_screen_width;
     int m_screen_height;
     std::string m_end_text = "click anywhere to replay";
