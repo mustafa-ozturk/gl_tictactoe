@@ -59,12 +59,12 @@ public:
     int curr_mouse_state;
     int prev_mouse_state;
 private:
-    int screen_width;
-    int screen_height;
-    std::string end_text = "click anywhere to replay";
-    std::string draw_text = "DRAW!";
-    std::string x_win_text = "X WINS!";
-    std::string o_win_text = "O WINS!";
+    int m_screen_width;
+    int m_screen_height;
+    std::string m_end_text = "click anywhere to replay";
+    std::string m_draw_text = "DRAW!";
+    std::string m_x_win_text = "X WINS!";
+    std::string m_o_win_text = "O WINS!";
 
     void draw_line(int x_start, int x_end, int y_start, int y_end);
 

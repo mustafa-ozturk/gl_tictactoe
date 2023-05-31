@@ -6,25 +6,25 @@ void Game::draw_lines(unsigned int shaderProgram)
     glUniform4f(glGetUniformLocation(shaderProgram, "color"), text_color[0],
                 text_color[1], text_color[2], text_color[3]);
     draw_line(0,
-              screen_width,
-              screen_height / 3,
-              screen_height / 3
+              m_screen_width,
+              m_screen_height / 3,
+              m_screen_height / 3
     );
     draw_line(0,
-              screen_width,
-              screen_height - screen_height / 3,
-              screen_height - screen_height / 3
+              m_screen_width,
+              m_screen_height - m_screen_height / 3,
+              m_screen_height - m_screen_height / 3
     );
     // vertical lines
-    draw_line(screen_width / 3,
-              screen_width / 3,
+    draw_line(m_screen_width / 3,
+              m_screen_width / 3,
               0,
-              screen_height
+              m_screen_height
     );
-    draw_line(screen_width - screen_width / 3,
-              screen_width - screen_width / 3,
+    draw_line(m_screen_width - m_screen_width / 3,
+              m_screen_width - m_screen_width / 3,
               0,
-              screen_height
+              m_screen_height
     );
 }
 
@@ -378,53 +378,53 @@ void Game::draw_endgame_text(END_GAME_STATES end_state,
                              gl_textrenderer& end_text_renderer)
 {
     std::pair<int, int> end_text_size = end_text_renderer.get_text_size(
-            end_text);
+            m_end_text);
     std::pair<int, int> draw_text_size = end_text_renderer.get_text_size(
-            draw_text);
+            m_draw_text);
     std::pair<int, int> x_win_text_size = end_text_renderer.get_text_size(
-            x_win_text);
+            m_x_win_text);
     std::pair<int, int> o_win_text_size = end_text_renderer.get_text_size(
-            o_win_text);
+            m_o_win_text);
 
     if (end_state != END_GAME_STATES::DRAW)
     {
         end_text_renderer.render_text(
-                (end_state == 1 ? x_win_text
-                                : o_win_text),
-                screen_width / 2 -
+                (end_state == 1 ? m_x_win_text
+                                : m_o_win_text),
+                m_screen_width / 2 -
                 ((end_state == 1 ? x_win_text_size.first
                                  : o_win_text_size.first)) /
                 2,
-                screen_height / 2 -
+                m_screen_height / 2 -
                 ((end_state == 1 ? x_win_text_size.second
                                  : o_win_text_size.second)) /
                 2 +
                 20
         );
-        end_text_renderer.render_text(end_text, screen_width / 2 -
+        end_text_renderer.render_text(m_end_text, m_screen_width / 2 -
                                                 end_text_size.first /
                                                 2,
-                                      screen_height / 2 -
+                                      m_screen_height / 2 -
                                       end_text_size.second / 2 + 2);
     } else
     {
-        end_text_renderer.render_text(draw_text,
-                                      screen_width / 2 -
+        end_text_renderer.render_text(m_draw_text,
+                                      m_screen_width / 2 -
                                       draw_text_size.first / 2,
-                                      screen_height / 2 -
+                                      m_screen_height / 2 -
                                       draw_text_size.second / 2 + 20
         );
-        end_text_renderer.render_text(end_text,
-                                      screen_width / 2 -
+        end_text_renderer.render_text(m_end_text,
+                                      m_screen_width / 2 -
                                       end_text_size.first / 2,
-                                      screen_height / 2 -
+                                      m_screen_height / 2 -
                                       end_text_size.second / 2 + 2
         );
     }
 }
 
 Game::Game(int screen_width, int screen_height)
-        : screen_width(screen_width), screen_height(screen_height)
+        : m_screen_width(screen_width), m_screen_height(screen_height)
 {
 
 }
