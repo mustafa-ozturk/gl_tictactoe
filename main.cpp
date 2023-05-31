@@ -85,17 +85,16 @@ int main()
         switch (current_game_state)
         {
             case GAME_STATE::GAME:
-
-                game.process_input(last_mouse_x, last_mouse_y, squares,
-                                   current_player, turn);
-                game.set_color_light();
-                game.draw_input(textrenderer, squares, shaderProgram);
-                game.draw_lines(shaderProgram);
-
                 if (turn == 9 || end_state != END_GAME_STATES::DRAW)
                 {
                     current_game_state = GAME_STATE::END;
                 }
+                game.process_input(last_mouse_x, last_mouse_y, squares,
+                                   current_player, turn);
+                game.set_color_light();
+
+                game.draw_input(textrenderer, squares, shaderProgram);
+                game.draw_lines(shaderProgram);
                 break;
             case GAME_STATE::END:
                 if (game.get_curr_mouse_state() == GLFW_PRESS &&
@@ -104,11 +103,10 @@ int main()
                     game.reset(turn, current_player, current_game_state);
                     break;
                 }
-
                 game.set_color_dark();
+
                 game.draw_input(textrenderer, squares, shaderProgram);
                 game.draw_lines(shaderProgram);
-
                 game.draw_endgame_text(end_state, end_text_renderer);
         }
         game.set_prev_mouse_state(game.get_curr_mouse_state());
