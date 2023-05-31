@@ -433,3 +433,23 @@ std::array<float, 4> Game::get_text_color()
 {
     return m_text_color;
 }
+
+int Game::get_curr_mouse_state()
+{
+    return curr_mouse_state;
+}
+
+int Game::get_prev_mouse_state()
+{
+    return prev_mouse_state;
+}
+
+int Game::set_curr_mouse_state(int mouse_state)
+{
+    curr_mouse_state = mouse_state;
+}
+
+int Game::set_prev_mouse_state(int mouse_state)
+{
+    prev_mouse_state = mouse_state;
+}

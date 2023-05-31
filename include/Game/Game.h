@@ -56,10 +56,14 @@ public:
 
     std::array<float, 4> get_text_color();
 
+    int get_curr_mouse_state();
+    int get_prev_mouse_state();
+
+    int set_curr_mouse_state(int mouse_state);
+    int set_prev_mouse_state(int mouse_state);
+private:
     int curr_mouse_state;
     int prev_mouse_state;
-
-private:
     std::array<float, 4> m_text_color = {1.0f, 1.0f, 1.0f, 1.0f};
     int m_screen_width;
     int m_screen_height;

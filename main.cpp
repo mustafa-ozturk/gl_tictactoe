@@ -78,7 +78,7 @@ int main()
                                       game.get_text_color()[2], game.get_text_color()[3]});
         const END_GAME_STATES end_state = game.find_winner();
 
-        game.curr_mouse_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1);
+        game.set_curr_mouse_state(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1));
         switch (current_game_state)
         {
             case GAME_STATE::GAME:
@@ -95,8 +95,8 @@ int main()
                 }
                 break;
             case GAME_STATE::END:
-                if (game.curr_mouse_state == GLFW_PRESS &&
-                    game.prev_mouse_state == GLFW_RELEASE)
+                if (game.get_curr_mouse_state() == GLFW_PRESS &&
+                    game.get_prev_mouse_state() == GLFW_RELEASE)
                 {
                     game.reset(turn, current_player, current_game_state);
                     break;
@@ -108,7 +108,7 @@ int main()
 
                 game.draw_endgame_text(end_state, end_text_renderer);
         }
-        game.prev_mouse_state = game.curr_mouse_state;
+        game.set_prev_mouse_state(game.get_curr_mouse_state());
 
         glfwSwapBuffers(window);
         glfwPollEvents();
