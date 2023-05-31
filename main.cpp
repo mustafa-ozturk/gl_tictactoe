@@ -46,9 +46,6 @@ int main()
     std::map<int, Square> squares = square.create_squares(SCREEN_WIDTH,
                                                           SCREEN_HEIGHT);
 
-    gl_gridlines gridlines(SCREEN_WIDTH, SCREEN_HEIGHT, 10, {1.0f, 0.5f, 0.2f});
-
-
     Shader shader;
     unsigned int shaderProgram = shader.get_shader_program();
     glUseProgram(shaderProgram);
