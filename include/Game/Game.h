@@ -51,16 +51,8 @@ public:
 
     void set_color_light();
 
-    void
-    draw_endgame_text(END_GAME_STATES end_state,
-                      std::string x_win_text, std::string o_win_text,
-                      std::pair<int, int> x_win_text_size,
-                      std::pair<int, int> o_win_text_size,
-                      std::pair<int, int> end_text_size,
-                      std::pair<int, int> draw_text_size,
-                      gl_textrenderer& end_text_renderer,
-                      std::string end_text, std::string draw_text
-    );
+    void draw_endgame_text(END_GAME_STATES end_state,
+                           gl_textrenderer& end_text_renderer);
 
     float text_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
@@ -69,6 +61,10 @@ public:
 private:
     int screen_width;
     int screen_height;
+    std::string end_text = "click anywhere to replay";
+    std::string draw_text = "DRAW!";
+    std::string x_win_text = "X WINS!";
+    std::string o_win_text = "O WINS!";
 
     void draw_line(int x_start, int x_end, int y_start, int y_end);
 

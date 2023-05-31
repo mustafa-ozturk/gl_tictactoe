@@ -161,7 +161,8 @@ void Game::draw_input(gl_textrenderer& textrenderer,
 }
 
 void Game::process_input(int last_mouse_x, int last_mouse_y,
-                         std::map<int, Square>& squares, END_GAME_STATES& current_player,
+                         std::map<int, Square>& squares,
+                         END_GAME_STATES& current_player,
                          int& turn)
 {
 
@@ -373,17 +374,18 @@ void Game::set_color_light()
     text_color[3] = 1.0f;
 }
 
-void
-Game::draw_endgame_text(END_GAME_STATES end_state,
-                        std::string x_win_text, std::string o_win_text,
-                        std::pair<int, int> x_win_text_size,
-                        std::pair<int, int> o_win_text_size,
-                        std::pair<int, int> end_text_size,
-                        std::pair<int, int> draw_text_size,
-                        gl_textrenderer& end_text_renderer,
-                        std::string end_text, std::string draw_text
-)
+void Game::draw_endgame_text(END_GAME_STATES end_state,
+                             gl_textrenderer& end_text_renderer)
 {
+    std::pair<int, int> end_text_size = end_text_renderer.get_text_size(
+            end_text);
+    std::pair<int, int> draw_text_size = end_text_renderer.get_text_size(
+            draw_text);
+    std::pair<int, int> x_win_text_size = end_text_renderer.get_text_size(
+            x_win_text);
+    std::pair<int, int> o_win_text_size = end_text_renderer.get_text_size(
+            o_win_text);
+
     if (end_state != END_GAME_STATES::DRAW)
     {
         end_text_renderer.render_text(
@@ -422,7 +424,7 @@ Game::draw_endgame_text(END_GAME_STATES end_state,
 }
 
 Game::Game(int screen_width, int screen_height)
-    : screen_width(screen_width), screen_height(screen_height)
+        : screen_width(screen_width), screen_height(screen_height)
 {
 
 }

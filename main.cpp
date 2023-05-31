@@ -65,14 +65,6 @@ int main()
     gl_textrenderer end_text_renderer(SCREEN_WIDTH, SCREEN_HEIGHT,
                                       "assets/UbuntuMono-R.ttf", 20,
                                       {0.0f, 1.0f, 0.8f, 1.0f});
-    std::string end_text = "click anywhere to replay";
-    auto end_text_size = end_text_renderer.get_text_size(end_text);
-    std::string draw_text = "DRAW!";
-    auto draw_text_size = end_text_renderer.get_text_size(draw_text);
-    std::string x_win_text = "X WINS!";
-    auto x_win_text_size = end_text_renderer.get_text_size(x_win_text);
-    std::string o_win_text = "O WINS!";
-    auto o_win_text_size = end_text_renderer.get_text_size(o_win_text);
 
     Game game(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -117,12 +109,7 @@ int main()
                 game.draw_input(textrenderer, squares, shaderProgram);
                 game.draw_lines(shaderProgram);
 
-                // FIXME: too many params
-                game.draw_endgame_text(end_state,
-                                       x_win_text, o_win_text, x_win_text_size,
-                                       o_win_text_size, end_text_size,
-                                       draw_text_size, end_text_renderer,
-                                       end_text, draw_text);
+                game.draw_endgame_text(end_state, end_text_renderer);
         }
         game.prev_mouse_state = game.curr_mouse_state;
 
